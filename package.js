@@ -3,39 +3,54 @@
 var path = require('path');
 var download = require('my-wget');
 var packageJson = require('package-json');
+var getVer = require('get-ver');
+var fs = require('fs');
+
 
 module.exports = class pkg {
 // class pkg {
 	constructor (name, version) {
+		this.name = name;
+		this.version = version;
+	}
+
+	getVerion (cb){
 		var self = this;
-		self.name = name;
-		self.version = version;
-		self.fullName = self.name + '-' + self.version;
-		self.file = self.fullName + '.tgz';
-		packageJson(name, version).then(function (json) {
-			console.log(json);
+		getVer(this.name, this.version).then(function (version) {
+			self.version = version;
+			self.fullName = self.name + '-' + self.version;
+			self.file = self.fullName + '.tgz';
+			cb();
 		});
 	}
 
 	download (toDir, cb) {
-		toDir = toDir || '';
+		this.toDir = toDir || '';
 		cb = cb || function (){};
+		this.getVerion(function () {
+			this.performDownload(cb);
+		}.bind(this));
+	}
+
+	performDownload (cb) {
 		var self = this;
-		var dest = path.join(__dirname, toDir, this.fullName);
+		var dest = path.join(__dirname, this.toDir, this.fullName);
 		var opts ={
 			ext: true,
 			dest: dest
 		}
 
-		this.downloadMod(opts, function (err, res) {
+		self.downloadMod(opts, function (err, res) {
 			if (err) {
 				self.downloadNpm(opts, function (err, res) {
 					if (err) {
 						return cb(self.fullName + ' not found.', undefined);
 					}
+					self.structure();
 					return cb(undefined, 'Downloaded from npm');
 				});
 			} else {
+				self.structure();
 				return cb(undefined, 'Downloaded from module');
 			}
 		})
@@ -49,6 +64,14 @@ module.exports = class pkg {
 	downloadMod (opts, cb) {
 		var url = 'https://s3.amazonaws.com/nghiattran/' + this.file;
 		return download(url, opts, cb);
+	}
+
+	structure () {
+		var toPath = path.join(__dirname, this.toDir);
+		var fromPath = path.join(toPath, this.fullName, 'package');
+		toPath = path.join(toPath, this.name);
+		fs.rename(fromPath, toPath);
+		// fs.rmdirSync(path.join(__dirname, this.toDir, this.fullName));
 	}
 }
 
