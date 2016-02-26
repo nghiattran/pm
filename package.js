@@ -1,48 +1,57 @@
 'use strict';
 
 var path = require('path');
-var download = require('./download');
+var download = require('my-wget');
+var packageJson = require('package-json');
 
-// module.exports = class pkg {
-class pkg {
+module.exports = class pkg {
+// class pkg {
 	constructor (name, version) {
-		this.name = name;
-		this.version = version;
-		this.fullName = this.name + '-' + this.version;
-		this.file = this.fullName + '.tgz';
+		var self = this;
+		self.name = name;
+		self.version = version;
+		self.fullName = self.name + '-' + self.version;
+		self.file = self.fullName + '.tgz';
+		packageJson(name, version).then(function (json) {
+			console.log(json);
+		});
 	}
 
-	download (cb) {
-		var dest = path.join(__dirname, this.fullName);
+	download (toDir, cb) {
+		toDir = toDir || '';
+		cb = cb || function (){};
+		var self = this;
+		var dest = path.join(__dirname, toDir, this.fullName);
 		var opts ={
 			ext: true,
 			dest: dest
 		}
-		console.log(typeof cb)
-		this.downloadMod(opts, cb) 
-			.on('error', function(err){
 
-			})
-		// try {
-		// 	this.downloadMod(opts);
-		// } catch(err) {
-		// 	this.downloadNpm(opts);
-		// }
+		this.downloadMod(opts, function (err, res) {
+			if (err) {
+				self.downloadNpm(opts, function (err, res) {
+					if (err) {
+						return cb(self.fullName + ' not found.', undefined);
+					}
+					return cb(undefined, 'Downloaded from npm');
+				});
+			} else {
+				return cb(undefined, 'Downloaded from module');
+			}
+		})
 	}
 
 	downloadNpm (opts, cb) {
-		console.log('here')
 		var url = 'http://registry.npmjs.org/' + this.name + '/-/' + this.file;
 		return download(url, opts, cb);
 	}
 
 	downloadMod (opts, cb) {
-		console.log('there')
 		var url = 'https://s3.amazonaws.com/nghiattran/' + this.file;
 		return download(url, opts, cb);
 	}
 }
 
-var aPkg = new pkg('npm', '1.0.0');
+// var aPkg = new pkg('version-checker', '0.0.24');
 
-aPkg.download();
+// aPkg.download();
