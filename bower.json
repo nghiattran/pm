@@ -1,0 +1,23 @@
+{
+  "name": "mod",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "NghiaTTran <nghiattran3@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/nghiattran/pm",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.0",
+    "bootstrap": "~3.3.6"
+  }
+}
