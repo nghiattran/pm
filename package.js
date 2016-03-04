@@ -35,7 +35,6 @@ module.exports = class Pkg {
 	download (cb) {
 		cb = cb || function (){};
 
-		this.downloadDependencies('dependencies');
 		if (this.main) {
 			this.readJson();
 			this.downloadDependencies('devDependencies');

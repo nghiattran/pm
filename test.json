@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "aws-sdk": "^2.1.38",
     "get-ver": "1.0.0"
   },
   "devDependencies": {},
