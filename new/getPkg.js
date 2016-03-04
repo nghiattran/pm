@@ -2,6 +2,7 @@
 
 var http = require('http')
 var semver = require('semver')
+var fs = require('fs')
 
 module.exports = class GetPkg {
   static http (cb) {
@@ -35,19 +36,20 @@ module.exports = class GetPkg {
     })
   }
 
-  static packageJson (pathToJson) {
-    pathToJson = pathToJson || 'test.json';
+  static packageJson (cb) {
+    var pathToJson = 'test.json';
+    console.log(pathToJson)
     try {
       var data = fs.readFileSync(pathToJson);
       try{
         data = JSON.parse(data);
         this.setPkg(data);
+        cb(undefined, data);
       } catch (err) {
-        console.error(err)
+        cb(err, undefined);
       }
     } catch (err) {
-      console.error('Can\'t read package.json of ' + this.fullName)
-      console.error(err)
+      cb(err, undefined);
     }
   }
 }

@@ -1,12 +1,10 @@
 'use strict'
-var Pkg = require('./basePkg')
-var fs = require('fs')
-var semver = require('semver')
-var path = require('path')
-var GetPkg = require('./getPkg')
-var NpmPkg = require('./npmPkg')
 
-module.exports = class NovPkg extends Pkg {
+var Pkg = require('./pkg')
+var GetPkg = require('./getPkg')
+var path = require('path')
+
+module.exports = class NpmPkg extends Pkg {
   constructor (name, version) {
     super(name, version, false)
 
@@ -16,15 +14,16 @@ module.exports = class NovPkg extends Pkg {
     super.createNestedDependency = this.createNestedDependency
 
     // set class variables
-    this.baseDir = 'modulars'
+    this.baseDir = 'node_modules'
     this.baseUrl = 'registry.npmjs.org'
-    this.identify = null 
   }
 
   /**
    * The package with its dependencies
    */
   install (cb) {
+    cb = cb || function () {}
+
     this.getInfo(function (err, res) {
       if (err) {
         cb(err, undefined)
@@ -44,15 +43,8 @@ module.exports = class NovPkg extends Pkg {
   }
 
   createNestedDependency (key, version) {
-    var dependency;
-
-    if (true) {
-      dependency = new NovPkg(key, version)
-    } else {
-      dependency = new NpmPkg(key, version)
-    }
-
-    dependency.baseDir = path.join(this.baseDir, this.name, this.baseDir)
+    var dependency = new NpmPkg(key, version)
+    dependency.baseDir = path.join(this.baseDir, this.name, 'node_modules')
     return dependency
   }
 }
