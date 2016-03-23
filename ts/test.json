@@ -4,16 +4,18 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "get-ver": "1.0.0",
+    "version-checker": "*",
+    "name_used" : "*",
     "aws-sdk": "^2.1.38",
-    "get-ver": "^1.0.1",
-    "gulp": "^3.9.1",
-    "gulp-typescript": "^2.12.1",
-    "merge2": "^1.0.1",
     "my-wget": "^1.0.0",
     "semver": "^5.1.0",
     "tar-fs": "1.10.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  },
   "scripts": {
     "test": "test"
   },
