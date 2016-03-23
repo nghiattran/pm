@@ -68,7 +68,7 @@ module.exports = class Pkg {
       dest: path.join(this.baseDir, this.name),
       strip: 1
     }
-
+    
     return wget(url, opts, cb)
   }
 

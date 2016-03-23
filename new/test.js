@@ -1,0 +1,1 @@
+var verCheck = require('version-checker')

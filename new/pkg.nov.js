@@ -1,10 +1,7 @@
 'use strict'
-var Pkg = require('./basePkg')
-var fs = require('fs')
-var semver = require('semver')
-var path = require('path')
+var Pkg = require('./pkg')
 var GetPkg = require('./getPkg')
-var NpmPkg = require('./npmPkg')
+var NpmPkg = require('./pkg.npm')
 
 module.exports = class NovPkg extends Pkg {
   constructor (name, version) {
@@ -25,6 +22,8 @@ module.exports = class NovPkg extends Pkg {
    * Install the package with its dependencies
    */
   install (cb) {
+    cb = cb || function () {}
+
     this.getInfo(function (err, res) {
       if (err) {
         cb(err, undefined)
@@ -52,7 +51,7 @@ module.exports = class NovPkg extends Pkg {
       dependency = new NpmPkg(key, version)
     }
 
-    dependency.baseDir = path.join(this.baseDir, this.name, this.baseDir)
+    dependency.baseDir = path.join(this.baseDir, this.name, 'modulars')
     return dependency
   }
 }
