@@ -9,7 +9,7 @@ module.exports = class NpmPkg extends Pkg {
   constructor (name, version) {
     super(name, version, false)
 
-    // overide abstract methods
+    // overwrite abstract methods
     super.getInfo = GetPkg.http
     super.install = this.install
     super.createNestedDependency = this.createNestedDependency
@@ -20,7 +20,7 @@ module.exports = class NpmPkg extends Pkg {
   }
 
   /**
-   * The package with its dependencies
+   * Install the package with its dependencies
    */
   install (cb) {
     this.getInfo(function (err, res) {

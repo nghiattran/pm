@@ -5,13 +5,14 @@ var semver = require('semver')
 var path = require('path')
 var GetPkg = require('./getPkg')
 var NpmPkg = require('./npmPkg')
+var NovPkg = require('./novPkg')
 
-module.exports = class NovPkg extends Pkg {
+module.exports = class MainPkg extends Pkg {
   constructor (name, version) {
     super(name, version, false)
 
     // overwrite abstract methods
-    super.getInfo = GetPkg.http
+    super.getInfo = GetPkg.packageJson
     super.install = this.install
     super.createNestedDependency = this.createNestedDependency
 
@@ -19,6 +20,9 @@ module.exports = class NovPkg extends Pkg {
     this.baseDir = 'modulars'
     this.baseUrl = 'registry.npmjs.org'
     this.identify = null 
+
+    this.download = NovPkg.download
+    this.createNestedDependency = NovPkg.createNestedDependency
   }
 
   /**
@@ -31,28 +35,8 @@ module.exports = class NovPkg extends Pkg {
       } else {
         this.download(cb)
         this.installDependencies('dependencies')
+        this.installDependencies('devDependencies')
       }
     }.bind(this))
-  }
-
-  /**
-   * Download package from npm and extract it
-   */
-  download (cb) {
-    var url = 'http://registry.npmjs.org/' + this.name + '/-/' + this.file
-    return super.download(url, cb)
-  }
-
-  createNestedDependency (key, version) {
-    var dependency;
-
-    if (true) {
-      dependency = new NovPkg(key, version)
-    } else {
-      dependency = new NpmPkg(key, version)
-    }
-
-    dependency.baseDir = path.join(this.baseDir, this.name, this.baseDir)
-    return dependency
   }
 }
