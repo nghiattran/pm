@@ -1,0 +1,24 @@
+{
+  "name": "mod",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "get-ver": "1.0.0",
+    "my-wget": "^1.0.0",
+    "tar-fs": "1.10.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "xo": "*"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "mod"
+  },
+  "author": "",
+  "license": "ISC"
+}
