@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "aws-sdk": "^2.1.38",
+    "bluebird": "^3.3.4",
     "compression": "^1.6.1",
     "get-ver": "^1.0.1",
     "gulp": "^3.9.1",

@@ -7,6 +7,9 @@ var _ = require('lodash');
 var path = require('path');
 var pkgInfo = [];
 var fs = require('fs');
+
+var deli = '/'
+
 // GetPkg.packageJson(function(err, res) {
 //   var pkgs = []
 //   var versions = []
@@ -38,22 +41,40 @@ function getList() {
 }
 function tree(pkgs) {
     for (var i = 0; i < pkgs.length; i++) {
-        pkgs[i].layer = (pkgs[i].path.split(path.sep)).length;
+        pkgs[i].layer = (pkgs[i].path.split(deli)).length;
     }
-    var tree = {};
-    var layer = 1;
-    var layerPkgs;
-    for (var i = pkgs.length - 1; i >= 0; i--) {
-        if (layer !== pkgs[i].layer) {
-            layerPkgs[path.basename(pkgs[i].path)] = pkgs[i];
-        }
-    }
-    console.log(tree);
+    // console.log(pkgs)
+
+    var tree = buildTree(pkgs)
+
     // var uniquePkgs = _.uniqWith(pkgs, isSame)
     // var conflictPkgs = getConflictPkgs(uniquePkgs)
     // console.log(uniquePkgs.length)
     // console.log(conflictPkgs.length)
 }
+    
+function buildTree (pkgs) {
+    var tree = {};
+    var layer = 1;
+    var layerPkgs = [];
+    for (var i = pkgs.length - 1; i >= 0; i--) {
+        if (layer !== pkgs[i].layer - 1) {
+            layer = pkgs[i].layer - 1 
+            layerPkgs[layer] ={}
+        }
+        layerPkgs[layer][path.basename(pkgs[i].path)] = pkgs[i];
+    }
+
+    console.log(layerPkgs[1]['tar'].path.split(deli)[layerPkgs[1]['tar'].layer - 2])
+    console.log(layerPkgs[1]['tar'].layer)
+
+    // for (var i = 1; i < layerPkgs.length; i++) {
+    //     for (var x = 0; x < layerPkgs[i].length; x++) {
+
+    //     }
+    // }
+}
+
 tree(getList());
 function getConflictPkgs(pkgs) {
     var tmp = {};
