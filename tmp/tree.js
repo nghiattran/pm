@@ -44,7 +44,7 @@ function tree(pkgs) {
         pkgs[i].layer = (pkgs[i].path.split(deli)).length;
     }
     // console.log(pkgs)
-
+    pkgs = construct(pkgs)
     var tree = buildTree(pkgs)
 
     // var uniquePkgs = _.uniqWith(pkgs, isSame)
@@ -52,27 +52,64 @@ function tree(pkgs) {
     // console.log(uniquePkgs.length)
     // console.log(conflictPkgs.length)
 }
+
+function construct (pkgs) {
+    var result = {}
+    for (var i = 0; i < pkgs.length; i++) {
+        result[pkgs[i].name] = pkgs[i]
+    }
+    return result
+}
     
 function buildTree (pkgs) {
-    var tree = {};
-    var layer = 1;
-    var layerPkgs = [];
-    for (var i = pkgs.length - 1; i >= 0; i--) {
-        if (layer !== pkgs[i].layer - 1) {
-            layer = pkgs[i].layer - 1 
-            layerPkgs[layer] ={}
-        }
-        layerPkgs[layer][path.basename(pkgs[i].path)] = pkgs[i];
+
+    var tmp = {}
+    var tmp1 = {}
+
+    for (var pkg in pkgs) {
+
     }
 
-    console.log(layerPkgs[1]['tar'].path.split(deli)[layerPkgs[1]['tar'].layer - 2])
-    console.log(layerPkgs[1]['tar'].layer)
+    // var tree = {};
+    // var layer = 1;
+    // var layerPkgs = [];
+    // var dependent = ''
+    // var tmpDependencies = {}
+    // for (var i = pkgs.length - 1; i >= 0; i--) {
+    //     if (layer !== pkgs[i].layer - 1) {
+    //         layer = pkgs[i].layer - 1 
+    //         layerPkgs[layer] ={}
+    //         tmpDependencies = {}
 
-    // for (var i = 1; i < layerPkgs.length; i++) {
-    //     for (var x = 0; x < layerPkgs[i].length; x++) {
+    //         for (var pkg in tmpDependencies) {
 
+    //         }
     //     }
+
+    //     var tmpDependent = layerPkgs[i]['tar'].path.split(deli)[layerPkgs[i]['tar'].layer - 2]
+    //     if (tmpDependent !== dependent) {
+    //         dependent = tmpDependent
+    //         tmpDependencies[tmpDependent] = []
+    //     }
+
+    //     tmpDependent[tmpDependent].push(pkg)
+
+
+    //     // layerPkgs[layer][path.basename(pkgs[i].path)] = pkgs[i];
     // }
+}
+
+function makeChange (obj, path, value) {
+    if (typeof obj === 'object') {
+        if (path < 1) {
+            obj[path] = value
+            return {msg: 'Updated'}
+        } else {
+            return {error: 'Could not reach destination'}
+        }
+    }
+
+    return {error: 'Could not reach destination'}
 }
 
 tree(getList());
