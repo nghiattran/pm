@@ -30,11 +30,6 @@
     "version": "2.2.1"
   },
   {
-    "path": "get-ver/semver",
-    "name": "semver",
-    "version": "5.1.0"
-  },
-  {
     "path": "tar-fs/mkdirp",
     "name": "mkdirp",
     "version": "0.5.1"
@@ -48,6 +43,11 @@
     "path": "tar-fs/tar-stream",
     "name": "tar-stream",
     "version": "1.3.2"
+  },
+  {
+    "path": "get-ver/semver",
+    "name": "semver",
+    "version": "5.1.0"
   },
   {
     "path": "my-wget/fs-extra/graceful-fs",
@@ -75,21 +75,6 @@
     "version": "2.5.2"
   },
   {
-    "path": "my-wget/tar/block-stream",
-    "name": "block-stream",
-    "version": "0.0.8"
-  },
-  {
-    "path": "my-wget/tar/fstream",
-    "name": "fstream",
-    "version": "1.0.8"
-  },
-  {
-    "path": "my-wget/tar/inherits",
-    "name": "inherits",
-    "version": "2.0.1"
-  },
-  {
     "path": "tar-fs/tar-stream/bl",
     "name": "bl",
     "version": "1.1.2"
@@ -108,21 +93,6 @@
     "path": "tar-fs/tar-stream/xtend",
     "name": "xtend",
     "version": "4.0.1"
-  },
-  {
-    "path": "tar-fs/pump/end-of-stream",
-    "name": "end-of-stream",
-    "version": "1.1.0"
-  },
-  {
-    "path": "tar-fs/pump/once",
-    "name": "once",
-    "version": "1.3.3"
-  },
-  {
-    "path": "tar-fs/mkdirp/minimist",
-    "name": "minimist",
-    "version": "0.0.8"
   },
   {
     "path": "my-wget/request/aws-sign2",
@@ -230,14 +200,39 @@
     "version": "0.4.2"
   },
   {
-    "path": "my-wget/tar/block-stream/inherits",
+    "path": "my-wget/tar/block-stream",
+    "name": "block-stream",
+    "version": "0.0.8"
+  },
+  {
+    "path": "my-wget/tar/fstream",
+    "name": "fstream",
+    "version": "1.0.8"
+  },
+  {
+    "path": "my-wget/tar/inherits",
     "name": "inherits",
     "version": "2.0.1"
   },
   {
-    "path": "my-wget/fs-extra/rimraf/glob",
-    "name": "glob",
-    "version": "7.0.3"
+    "path": "tar-fs/pump/end-of-stream",
+    "name": "end-of-stream",
+    "version": "1.1.0"
+  },
+  {
+    "path": "tar-fs/pump/once",
+    "name": "once",
+    "version": "1.3.3"
+  },
+  {
+    "path": "tar-fs/mkdirp/minimist",
+    "name": "minimist",
+    "version": "0.0.8"
+  },
+  {
+    "path": "tar-fs/tar-stream/end-of-stream/once",
+    "name": "once",
+    "version": "1.3.3"
   },
   {
     "path": "tar-fs/tar-stream/bl/readable-stream",
@@ -245,9 +240,9 @@
     "version": "2.0.6"
   },
   {
-    "path": "tar-fs/pump/once/wrappy",
-    "name": "wrappy",
-    "version": "1.0.1"
+    "path": "my-wget/fs-extra/rimraf/glob",
+    "name": "glob",
+    "version": "7.0.3"
   },
   {
     "path": "tar-fs/tar-stream/readable-stream/core-util-is",
@@ -280,14 +275,19 @@
     "version": "1.0.2"
   },
   {
-    "path": "tar-fs/pump/end-of-stream/once",
-    "name": "once",
-    "version": "1.3.3"
+    "path": "my-wget/request/bl/readable-stream",
+    "name": "readable-stream",
+    "version": "2.0.6"
   },
   {
     "path": "my-wget/request/aws4/lru-cache",
     "name": "lru-cache",
     "version": "4.0.1"
+  },
+  {
+    "path": "my-wget/request/combined-stream/delayed-stream",
+    "name": "delayed-stream",
+    "version": "1.0.0"
   },
   {
     "path": "my-wget/request/form-data/async",
@@ -303,11 +303,6 @@
     "path": "my-wget/request/form-data/mime-types",
     "name": "mime-types",
     "version": "2.1.10"
-  },
-  {
-    "path": "tar-fs/tar-stream/end-of-stream/once",
-    "name": "once",
-    "version": "1.3.3"
   },
   {
     "path": "my-wget/request/http-signature/assert-plus",
@@ -365,19 +360,19 @@
     "version": "1.0.9"
   },
   {
-    "path": "my-wget/request/bl/readable-stream",
-    "name": "readable-stream",
-    "version": "2.0.6"
+    "path": "my-wget/tar/block-stream/inherits",
+    "name": "inherits",
+    "version": "2.0.1"
   },
   {
-    "path": "my-wget/request/combined-stream/delayed-stream",
-    "name": "delayed-stream",
-    "version": "1.0.0"
+    "path": "tar-fs/pump/end-of-stream/once",
+    "name": "once",
+    "version": "1.3.3"
   },
   {
-    "path": "my-wget/request/mime-types/mime-db",
-    "name": "mime-db",
-    "version": "1.22.0"
+    "path": "tar-fs/pump/once/wrappy",
+    "name": "wrappy",
+    "version": "1.0.1"
   },
   {
     "path": "my-wget/tar/fstream/graceful-fs",
@@ -398,6 +393,16 @@
     "path": "my-wget/tar/fstream/rimraf",
     "name": "rimraf",
     "version": "2.5.2"
+  },
+  {
+    "path": "my-wget/request/mime-types/mime-db",
+    "name": "mime-db",
+    "version": "1.22.0"
+  },
+  {
+    "path": "tar-fs/tar-stream/end-of-stream/once/wrappy",
+    "name": "wrappy",
+    "version": "1.0.1"
   },
   {
     "path": "tar-fs/tar-stream/bl/readable-stream/core-util-is",
@@ -430,26 +435,6 @@
     "version": "1.0.2"
   },
   {
-    "path": "tar-fs/pump/end-of-stream/once/wrappy",
-    "name": "wrappy",
-    "version": "1.0.1"
-  },
-  {
-    "path": "my-wget/request/form-data/combined-stream/delayed-stream",
-    "name": "delayed-stream",
-    "version": "1.0.0"
-  },
-  {
-    "path": "my-wget/request/aws4/lru-cache/pseudomap",
-    "name": "pseudomap",
-    "version": "1.0.2"
-  },
-  {
-    "path": "my-wget/request/aws4/lru-cache/yallist",
-    "name": "yallist",
-    "version": "2.0.0"
-  },
-  {
     "path": "my-wget/fs-extra/rimraf/glob/inflight",
     "name": "inflight",
     "version": "1.0.4"
@@ -475,6 +460,56 @@
     "version": "1.0.0"
   },
   {
+    "path": "my-wget/request/bl/readable-stream/core-util-is",
+    "name": "core-util-is",
+    "version": "1.0.2"
+  },
+  {
+    "path": "my-wget/request/bl/readable-stream/inherits",
+    "name": "inherits",
+    "version": "2.0.1"
+  },
+  {
+    "path": "my-wget/request/bl/readable-stream/isarray",
+    "name": "isarray",
+    "version": "1.0.0"
+  },
+  {
+    "path": "my-wget/request/bl/readable-stream/process-nextick-args",
+    "name": "process-nextick-args",
+    "version": "1.0.6"
+  },
+  {
+    "path": "my-wget/request/bl/readable-stream/string_decoder",
+    "name": "string_decoder",
+    "version": "0.10.31"
+  },
+  {
+    "path": "my-wget/request/bl/readable-stream/util-deprecate",
+    "name": "util-deprecate",
+    "version": "1.0.2"
+  },
+  {
+    "path": "my-wget/request/form-data/combined-stream/delayed-stream",
+    "name": "delayed-stream",
+    "version": "1.0.0"
+  },
+  {
+    "path": "my-wget/request/aws4/lru-cache/pseudomap",
+    "name": "pseudomap",
+    "version": "1.0.2"
+  },
+  {
+    "path": "my-wget/request/aws4/lru-cache/yallist",
+    "name": "yallist",
+    "version": "2.0.0"
+  },
+  {
+    "path": "my-wget/request/form-data/mime-types/mime-db",
+    "name": "mime-db",
+    "version": "1.22.0"
+  },
+  {
     "path": "my-wget/request/http-signature/jsprim/extsprintf",
     "name": "extsprintf",
     "version": "1.0.2"
@@ -488,16 +523,6 @@
     "path": "my-wget/request/http-signature/jsprim/verror",
     "name": "verror",
     "version": "1.3.6"
-  },
-  {
-    "path": "tar-fs/tar-stream/end-of-stream/once/wrappy",
-    "name": "wrappy",
-    "version": "1.0.1"
-  },
-  {
-    "path": "my-wget/request/form-data/mime-types/mime-db",
-    "name": "mime-db",
-    "version": "1.22.0"
   },
   {
     "path": "my-wget/request/har-validator/chalk/ansi-styles",
@@ -528,6 +553,41 @@
     "path": "my-wget/request/har-validator/commander/graceful-readlink",
     "name": "graceful-readlink",
     "version": "1.0.1"
+  },
+  {
+    "path": "my-wget/request/har-validator/pinkie-promise/pinkie",
+    "name": "pinkie",
+    "version": "2.0.4"
+  },
+  {
+    "path": "tar-fs/pump/end-of-stream/once/wrappy",
+    "name": "wrappy",
+    "version": "1.0.1"
+  },
+  {
+    "path": "my-wget/request/har-validator/is-my-json-valid/generate-function",
+    "name": "generate-function",
+    "version": "2.0.0"
+  },
+  {
+    "path": "my-wget/request/har-validator/is-my-json-valid/generate-object-property",
+    "name": "generate-object-property",
+    "version": "1.2.0"
+  },
+  {
+    "path": "my-wget/request/har-validator/is-my-json-valid/jsonpointer",
+    "name": "jsonpointer",
+    "version": "2.0.0"
+  },
+  {
+    "path": "my-wget/request/har-validator/is-my-json-valid/xtend",
+    "name": "xtend",
+    "version": "4.0.1"
+  },
+  {
+    "path": "my-wget/request/hawk/boom/hoek",
+    "name": "hoek",
+    "version": "2.16.3"
   },
   {
     "path": "my-wget/request/http-signature/sshpk/asn1",
@@ -565,79 +625,9 @@
     "version": "0.1.1"
   },
   {
-    "path": "my-wget/request/hawk/boom/hoek",
-    "name": "hoek",
-    "version": "2.16.3"
-  },
-  {
-    "path": "my-wget/request/har-validator/pinkie-promise/pinkie",
-    "name": "pinkie",
-    "version": "2.0.4"
-  },
-  {
-    "path": "my-wget/request/har-validator/is-my-json-valid/generate-function",
-    "name": "generate-function",
-    "version": "2.0.0"
-  },
-  {
-    "path": "my-wget/request/har-validator/is-my-json-valid/generate-object-property",
-    "name": "generate-object-property",
-    "version": "1.2.0"
-  },
-  {
-    "path": "my-wget/request/har-validator/is-my-json-valid/jsonpointer",
-    "name": "jsonpointer",
-    "version": "2.0.0"
-  },
-  {
-    "path": "my-wget/request/har-validator/is-my-json-valid/xtend",
-    "name": "xtend",
-    "version": "4.0.1"
-  },
-  {
-    "path": "my-wget/request/hawk/cryptiles/boom",
-    "name": "boom",
-    "version": "2.10.1"
-  },
-  {
     "path": "my-wget/request/hawk/sntp/hoek",
     "name": "hoek",
     "version": "2.16.3"
-  },
-  {
-    "path": "my-wget/request/bl/readable-stream/core-util-is",
-    "name": "core-util-is",
-    "version": "1.0.2"
-  },
-  {
-    "path": "my-wget/request/bl/readable-stream/inherits",
-    "name": "inherits",
-    "version": "2.0.1"
-  },
-  {
-    "path": "my-wget/request/bl/readable-stream/isarray",
-    "name": "isarray",
-    "version": "1.0.0"
-  },
-  {
-    "path": "my-wget/request/bl/readable-stream/process-nextick-args",
-    "name": "process-nextick-args",
-    "version": "1.0.6"
-  },
-  {
-    "path": "my-wget/request/bl/readable-stream/string_decoder",
-    "name": "string_decoder",
-    "version": "0.10.31"
-  },
-  {
-    "path": "my-wget/request/bl/readable-stream/util-deprecate",
-    "name": "util-deprecate",
-    "version": "1.0.2"
-  },
-  {
-    "path": "my-wget/tar/fstream/rimraf/glob",
-    "name": "glob",
-    "version": "7.0.3"
   },
   {
     "path": "my-wget/tar/fstream/mkdirp/minimist",
@@ -645,29 +635,14 @@
     "version": "0.0.8"
   },
   {
-    "path": "my-wget/fs-extra/rimraf/glob/once/wrappy",
-    "name": "wrappy",
-    "version": "1.0.1"
+    "path": "my-wget/tar/fstream/rimraf/glob",
+    "name": "glob",
+    "version": "7.0.3"
   },
   {
-    "path": "my-wget/request/har-validator/chalk/ansi-styles/color-convert",
-    "name": "color-convert",
-    "version": "1.0.0"
-  },
-  {
-    "path": "my-wget/request/har-validator/chalk/strip-ansi/ansi-regex",
-    "name": "ansi-regex",
-    "version": "2.0.0"
-  },
-  {
-    "path": "my-wget/request/http-signature/jsprim/verror/extsprintf",
-    "name": "extsprintf",
-    "version": "1.0.2"
-  },
-  {
-    "path": "my-wget/request/har-validator/chalk/has-ansi/ansi-regex",
-    "name": "ansi-regex",
-    "version": "2.0.0"
+    "path": "my-wget/request/hawk/cryptiles/boom",
+    "name": "boom",
+    "version": "2.10.1"
   },
   {
     "path": "my-wget/fs-extra/rimraf/glob/inflight/once",
@@ -680,14 +655,9 @@
     "version": "1.0.1"
   },
   {
-    "path": "my-wget/request/http-signature/sshpk/ecc-jsbn/jsbn",
-    "name": "jsbn",
-    "version": "0.1.0"
-  },
-  {
-    "path": "my-wget/request/http-signature/sshpk/jodid25519/jsbn",
-    "name": "jsbn",
-    "version": "0.1.0"
+    "path": "my-wget/fs-extra/rimraf/glob/once/wrappy",
+    "name": "wrappy",
+    "version": "1.0.1"
   },
   {
     "path": "my-wget/fs-extra/rimraf/glob/minimatch/brace-expansion",
@@ -695,14 +665,44 @@
     "version": "1.1.3"
   },
   {
+    "path": "my-wget/request/har-validator/chalk/has-ansi/ansi-regex",
+    "name": "ansi-regex",
+    "version": "2.0.0"
+  },
+  {
+    "path": "my-wget/request/http-signature/jsprim/verror/extsprintf",
+    "name": "extsprintf",
+    "version": "1.0.2"
+  },
+  {
     "path": "my-wget/request/har-validator/is-my-json-valid/generate-object-property/is-property",
     "name": "is-property",
     "version": "1.0.2"
   },
   {
+    "path": "my-wget/request/har-validator/chalk/ansi-styles/color-convert",
+    "name": "color-convert",
+    "version": "1.0.0"
+  },
+  {
+    "path": "my-wget/request/har-validator/chalk/strip-ansi/ansi-regex",
+    "name": "ansi-regex",
+    "version": "2.0.0"
+  },
+  {
+    "path": "my-wget/request/http-signature/sshpk/jodid25519/jsbn",
+    "name": "jsbn",
+    "version": "0.1.0"
+  },
+  {
     "path": "my-wget/request/http-signature/sshpk/dashdash/assert-plus",
     "name": "assert-plus",
     "version": "1.0.0"
+  },
+  {
+    "path": "my-wget/request/http-signature/sshpk/ecc-jsbn/jsbn",
+    "name": "jsbn",
+    "version": "0.1.0"
   },
   {
     "path": "my-wget/request/hawk/cryptiles/boom/hoek",
@@ -750,17 +750,17 @@
     "version": "0.0.1"
   },
   {
-    "path": "my-wget/tar/fstream/rimraf/glob/once/wrappy",
-    "name": "wrappy",
-    "version": "1.0.1"
-  },
-  {
     "path": "my-wget/tar/fstream/rimraf/glob/inflight/once",
     "name": "once",
     "version": "1.3.3"
   },
   {
     "path": "my-wget/tar/fstream/rimraf/glob/inflight/wrappy",
+    "name": "wrappy",
+    "version": "1.0.1"
+  },
+  {
+    "path": "my-wget/tar/fstream/rimraf/glob/once/wrappy",
     "name": "wrappy",
     "version": "1.0.1"
   },

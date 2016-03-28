@@ -7,9 +7,6 @@ var _ = require('lodash');
 var path = require('path');
 var pkgInfo = [];
 var fs = require('fs');
-
-var deli = '/'
-
 // GetPkg.packageJson(function(err, res) {
 //   var pkgs = []
 //   var versions = []
@@ -41,41 +38,44 @@ function getList() {
 }
 function tree(pkgs) {
     for (var i = 0; i < pkgs.length; i++) {
-        pkgs[i].layer = (pkgs[i].path.split(deli)).length;
+        pkgs[i].layer = (pkgs[i].path.split(path.sep)).length;
     }
-    // console.log(pkgs)
-
-    var tree = buildTree(pkgs)
-
-    // var uniquePkgs = _.uniqWith(pkgs, isSame)
-    // var conflictPkgs = getConflictPkgs(uniquePkgs)
-    // console.log(uniquePkgs.length)
-    // console.log(conflictPkgs.length)
-}
-    
-function buildTree (pkgs) {
     var tree = {};
-    var layer = 1;
-    var layerPkgs = [];
-    for (var i = pkgs.length - 1; i >= 0; i--) {
-        if (layer !== pkgs[i].layer - 1) {
-            layer = pkgs[i].layer - 1 
-            layerPkgs[layer] ={}
+    // console.log(pkgs[90].path.split(path.sep))
+    for (var i = 0; i < pkgs.length; i++) {
+        var direction = _.cloneDeep(pkgs[i].path.split(path.sep));
+        var len = direction.length;
+        var index = 0;
+        for (var x = 0; x < len - 2; x++) {
+            direction.splice(x + 1, 0, 'dependencies');
         }
-        layerPkgs[layer][path.basename(pkgs[i].path)] = pkgs[i];
+        console.log(direction);
     }
-
-    console.log(layerPkgs[1]['tar'].path.split(deli)[layerPkgs[1]['tar'].layer - 2])
-    console.log(layerPkgs[1]['tar'].layer)
-
-    // for (var i = 1; i < layerPkgs.length; i++) {
-    //     for (var x = 0; x < layerPkgs[i].length; x++) {
-
-    //     }
-    // }
 }
-
 tree(getList());
+function set(object, path, value) {
+    if (typeof object !== 'object') {
+        return {
+            err: 'Error! Expect an object.'
+        };
+    }
+    if (path.length === 1) {
+        object[path[0]] = value;
+        return {
+            res: 'Updated'
+        };
+    }
+    else if (path.length > 1) {
+        var tmp = path.shift();
+        object[tmp] = object[tmp] || {};
+        if (typeof object[tmp] !== 'object') {
+            return {
+                err: 'Error! Expect ' + tmp + 'to be an object. Get ' + typeof object[tmp] + ' instead.'
+            };
+        }
+        return set(object[tmp], path, value);
+    }
+}
 function getConflictPkgs(pkgs) {
     var tmp = {};
     var dups = _.reduce(pkgs, function (result, value, key) {
