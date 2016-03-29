@@ -78,11 +78,10 @@ export function getAllDependencies(cb) {
 
     getAPkgDependencies(pkgs)
       .then(function(pkgs) {
-        var tempTest = _.uniqBy(pkgs, 'name')
-
-        var temp = _.uniqWith(pkgs, isSame)
-        // fs.writeFileSync('pack.json', JSON.stringify(pkgs, null, 2), 'utf8')
-        cb(undefined, pkgs)
+        const reducedList = _.uniqWith(pkgs, isSame)
+        // var reducedList = pkgs
+        fs.writeFileSync('pack.json', JSON.stringify(reducedList, null, 2), 'utf8')
+        cb(undefined, reducedList)
       })
       .catch(function (err) {
         cb(err, undefined)
@@ -94,8 +93,8 @@ export function getAllDependencies(cb) {
  * [isSame description]
  * Is used to check wether 2 pkgs are the similar
  */
-function isSame(left, right) : Boolean {
-  if (left.name === right.name )
+export function isSame(left, right) : Boolean {
+  if (left.name === right.name)
   {
     if (left.version !== right.version) {
       return false

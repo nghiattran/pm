@@ -36,7 +36,7 @@ export function makeTree(pkgs: any[]) : Object {
 
   for (var i = 0; i < pkgs.length; i++) {
     var direction = pkgs[i].path.split(path.sep)
-    var tmpArray = constructPkgPath(direction, pkgs[i].name)
+    var tmpArray = constructPkgPath(pkgs[i].path)
     endash.set(tree, tmpArray, pkgs[i])
   }
 
@@ -48,15 +48,16 @@ export function makeTree(pkgs: any[]) : Object {
  * Construct the path to a pkg from dependency path
  *
  * Example:
- * dir = ['pkg1', 'pkg2']
- * pkgName = 'pkg3'
+ * dir = 'pkg1//pkg2//pkg3'
  *
  * return: ['pkg1', 'dependencies', 'pkg2', 'dependencies', 'pkg3']
  */
-function constructPkgPath(dir: any[], pkgName:string) : any[] {
+export function constructPkgPath(dir: string, subDir = 'dependencies') : any[] {
+  var tempDir = dir.split(path.sep)
   var tmpPath = []
-  for (var x = 0; x < dir.length-1; x++ ) {
-    tmpPath.push(dir[x], 'dependencies')
+  var pkgName = tempDir.pop()
+  for (var x = 0; x < tempDir.length;x++ ) {
+    tmpPath.push(tempDir[x], subDir)
   }
   tmpPath.push(pkgName)
   return tmpPath
@@ -68,15 +69,23 @@ function constructPkgPath(dir: any[], pkgName:string) : any[] {
  *
  * return: an array of conflict pkgs array
  */
-function getConflictPkgs(pkgs: any[]) : any[] {
+export function getConflictPkgs(pkgs: any[]) : any[] {
   var tmp = {}
   var dups = _.reduce(pkgs, function(result, value, key) {
+    value.index = key;
     (result[value.name] || (result[value.name] = [])).push(value);
     return result;
   }, {})
 
-  var conflictPkgs = _.filter(dups, function(o) { 
-    return o.length > 1
+  var conflictPkgs = _.filter(dups, function(o) {
+    if(o.length > 1) {
+      for (var i = 0; i < o.length; i++) {
+        o[i].isConflict = true
+      }
+      return true
+    }
+ 
+    return false
   })
 
   return conflictPkgs

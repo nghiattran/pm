@@ -4,12 +4,18 @@
 
 var fs = require('fs')
 
-export function getList(): any[] {
-  try {
-    return JSON.parse(fs.readFileSync('pack.json', 'utf8'))
-  } catch (err) {
-    return [err]
-  }
+export function getList(cb: Function): void {
+
+  fs.readFile('pack.json', 'utf8', function function_name(err, res) {
+    if(!err) {
+      try {
+        return cb(undefined, JSON.parse(res)
+      } catch (err) {
+        return cb(err, undefined)
+      }
+    }
+    return cb(err, undefined)
+  })
 }
 
 /**
