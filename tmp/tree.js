@@ -1,5 +1,6 @@
 /// <reference path="node.d.ts" />
-var semver = require('semver');
+'use strict';
+var endash = require('./components/endash');
 var getVer = require('get-ver');
 var bluebird = require('bluebird');
 var GetPkg = bluebird.promisifyAll(require('./getPkg'));
@@ -7,171 +8,78 @@ var _ = require('lodash');
 var path = require('path');
 var pkgInfo = [];
 var fs = require('fs');
-
-var deli = '/'
-
-// GetPkg.packageJson(function(err, res) {
-//   var pkgs = []
-//   var versions = []
-//   for (var pkg in res.dependencies) {
-//     pkgs.push({ 
-//       name: pkg,
-//       path: '',
-//       version: res.dependencies[pkg]
-//     })
-//   }
-//   get(pkgs)
-//     .then(function(pkgs) {
-//       console.log(pkgs)
-//       console.log(pkgs.length)
-//       var tempTest = _.uniqBy(pkgs, 'name')
-//       var temp = _.uniqWith(pkgs, isSame)
-//       fs.writeFileSync('pack.json', JSON.stringify(pkgs, null, 2),'utf8')
-//       console.log(temp.length)
-//       console.log(tempTest.length)
-//     })
-// })
-function getList() {
-    try {
-        return JSON.parse(fs.readFileSync('pack.json', 'utf8'));
-    }
-    catch (err) {
-        return { err: err };
-    }
-}
-function tree(pkgs) {
+/**
+ * [makeTree description]
+ * Construct dependency tree from pkg list
+ *
+ * Example:
+ * pkgs = [pkg1, pkg2, pkg3]
+ * return: (assume pkg2 depend on pkg1 and pkg3 is independent)
+ * {
+ *   pkg1: {
+ *     dependencies: {
+ *       pkg2
+ *     }
+ *   },
+ *   pkg3
+ * }
+ */
+function makeTree(pkgs) {
     for (var i = 0; i < pkgs.length; i++) {
-        pkgs[i].layer = (pkgs[i].path.split(deli)).length;
+        pkgs[i].layer = (pkgs[i].path.split(path.sep)).length;
     }
-    // console.log(pkgs)
-    pkgs = construct(pkgs)
-    var tree = buildTree(pkgs)
-
-    // var uniquePkgs = _.uniqWith(pkgs, isSame)
-    // var conflictPkgs = getConflictPkgs(uniquePkgs)
-    // console.log(uniquePkgs.length)
-    // console.log(conflictPkgs.length)
-}
-
-function construct (pkgs) {
-    var result = {}
+    var tree = {};
     for (var i = 0; i < pkgs.length; i++) {
-        result[pkgs[i].name] = pkgs[i]
+        var direction = pkgs[i].path.split(path.sep);
+        var tmpArray = constructPkgPath(pkgs[i].path);
+        endash.set(tree, tmpArray, pkgs[i]);
     }
-    return result
+    return tree;
 }
-    
-function buildTree (pkgs) {
-
-    var tmp = {}
-    var tmp1 = {}
-
-    for (var pkg in pkgs) {
-
+exports.makeTree = makeTree;
+/**
+ * [constructPkgPath description]
+ * Construct the path to a pkg from dependency path
+ *
+ * Example:
+ * dir = 'pkg1//pkg2//pkg3'
+ *
+ * return: ['pkg1', 'dependencies', 'pkg2', 'dependencies', 'pkg3']
+ */
+function constructPkgPath(dir, subDir) {
+    if (subDir === void 0) { subDir = 'dependencies'; }
+    var tempDir = dir.split(path.sep);
+    var tmpPath = [];
+    var pkgName = tempDir.pop();
+    for (var x = 0; x < tempDir.length; x++) {
+        tmpPath.push(tempDir[x], subDir);
     }
-
-    // var tree = {};
-    // var layer = 1;
-    // var layerPkgs = [];
-    // var dependent = ''
-    // var tmpDependencies = {}
-    // for (var i = pkgs.length - 1; i >= 0; i--) {
-    //     if (layer !== pkgs[i].layer - 1) {
-    //         layer = pkgs[i].layer - 1 
-    //         layerPkgs[layer] ={}
-    //         tmpDependencies = {}
-
-    //         for (var pkg in tmpDependencies) {
-
-    //         }
-    //     }
-
-    //     var tmpDependent = layerPkgs[i]['tar'].path.split(deli)[layerPkgs[i]['tar'].layer - 2]
-    //     if (tmpDependent !== dependent) {
-    //         dependent = tmpDependent
-    //         tmpDependencies[tmpDependent] = []
-    //     }
-
-    //     tmpDependent[tmpDependent].push(pkg)
-
-
-    //     // layerPkgs[layer][path.basename(pkgs[i].path)] = pkgs[i];
-    // }
+    tmpPath.push(pkgName);
+    return tmpPath;
 }
-
-function makeChange (obj, path, value) {
-    if (typeof obj === 'object') {
-        if (path < 1) {
-            obj[path] = value
-            return {msg: 'Updated'}
-        } else {
-            return {error: 'Could not reach destination'}
-        }
-    }
-
-    return {error: 'Could not reach destination'}
-}
-
-tree(getList());
+exports.constructPkgPath = constructPkgPath;
+/**
+ * [getConflictPkgs description]
+ * Is used to filter out conflict pkgs
+ *
+ * return: an array of conflict pkgs array
+ */
 function getConflictPkgs(pkgs) {
     var tmp = {};
     var dups = _.reduce(pkgs, function (result, value, key) {
+        value.index = key;
         (result[value.name] || (result[value.name] = [])).push(value);
         return result;
     }, {});
     var conflictPkgs = _.filter(dups, function (o) {
-        return o.length > 1;
+        if (o.length > 1) {
+            for (var i = 0; i < o.length; i++) {
+                o[i].isConflict = true;
+            }
+            return true;
+        }
+        return false;
     });
     return conflictPkgs;
 }
-function isSame(left, right) {
-    if (left.name === right.name) {
-        if (left.version !== right.version) {
-            return false;
-        }
-        return true;
-    }
-    return false;
-}
-function get(pkgs) {
-    if (pkgs.length <= 0) {
-        return;
-    }
-    var dependencies = [];
-    return bluebird.map(pkgs, function (pkg) {
-        return GetPkg.httpAsync(pkg.name)
-            .then(function (res) {
-            // Get version
-            var version = semver.maxSatisfying(Object.keys(res.versions), pkg.version);
-            var index = pkgs.indexOf(pkg);
-            pkgs[index] = {
-                path: path.join(pkg.path, pkg.name),
-                name: pkg.name,
-                version: version
-            };
-            // Get dependencies
-            var tmp = res.versions[version].dependencies;
-            if (tmp && tmp !== {}) {
-                for (var package in tmp) {
-                    dependencies.push({
-                        name: package,
-                        path: pkgs[index].path,
-                        version: tmp[package]
-                    });
-                }
-            }
-        });
-    })
-        .then(function () {
-        // return pkgs
-        if (dependencies.length > 0) {
-            return get(dependencies)
-                .then(function (dependencies) {
-                if (dependencies) {
-                    pkgs = _.concat(pkgs, dependencies);
-                }
-                return pkgs;
-            });
-        }
-    });
-}
+exports.getConflictPkgs = getConflictPkgs;
