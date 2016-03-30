@@ -1,482 +1,342 @@
 [
   {
-    "path": "get-ver",
-    "name": "get-ver",
-    "version": "1.0.0"
+    "path": "npm-openweathermap",
+    "name": "npm-openweathermap",
+    "version": "0.0.1"
   },
   {
-    "path": "my-wget",
-    "name": "my-wget",
-    "version": "1.1.0"
+    "path": "npm-openweathermap/q",
+    "name": "q",
+    "version": "1.4.1"
   },
   {
-    "path": "tar-fs",
-    "name": "tar-fs",
-    "version": "1.10.0"
-  },
-  {
-    "path": "my-wget\\fs-extra",
-    "name": "fs-extra",
-    "version": "0.26.7"
-  },
-  {
-    "path": "my-wget\\request",
+    "path": "npm-openweathermap/request",
     "name": "request",
     "version": "2.69.0"
   },
   {
-    "path": "my-wget\\tar",
-    "name": "tar",
-    "version": "2.2.1"
-  },
-  {
-    "path": "get-ver\\semver",
-    "name": "semver",
-    "version": "5.1.0"
-  },
-  {
-    "path": "tar-fs\\mkdirp",
-    "name": "mkdirp",
-    "version": "0.5.1"
-  },
-  {
-    "path": "tar-fs\\pump",
-    "name": "pump",
-    "version": "1.0.1"
-  },
-  {
-    "path": "tar-fs\\tar-stream",
-    "name": "tar-stream",
-    "version": "1.3.2"
-  },
-  {
-    "path": "tar-fs\\mkdirp\\minimist",
-    "name": "minimist",
-    "version": "0.0.8"
-  },
-  {
-    "path": "tar-fs\\pump\\end-of-stream",
-    "name": "end-of-stream",
-    "version": "1.1.0"
-  },
-  {
-    "path": "tar-fs\\pump\\once",
-    "name": "once",
-    "version": "1.3.3"
-  },
-  {
-    "path": "my-wget\\tar\\block-stream",
-    "name": "block-stream",
-    "version": "0.0.8"
-  },
-  {
-    "path": "my-wget\\tar\\fstream",
-    "name": "fstream",
-    "version": "1.0.8"
-  },
-  {
-    "path": "my-wget\\tar\\inherits",
-    "name": "inherits",
-    "version": "2.0.1"
-  },
-  {
-    "path": "tar-fs\\tar-stream\\bl",
-    "name": "bl",
-    "version": "1.1.2"
-  },
-  {
-    "path": "tar-fs\\tar-stream\\readable-stream",
-    "name": "readable-stream",
-    "version": "2.0.6"
-  },
-  {
-    "path": "tar-fs\\tar-stream\\xtend",
-    "name": "xtend",
-    "version": "4.0.1"
-  },
-  {
-    "path": "my-wget\\fs-extra\\graceful-fs",
-    "name": "graceful-fs",
-    "version": "4.1.3"
-  },
-  {
-    "path": "my-wget\\fs-extra\\jsonfile",
-    "name": "jsonfile",
-    "version": "2.2.3"
-  },
-  {
-    "path": "my-wget\\fs-extra\\klaw",
-    "name": "klaw",
-    "version": "1.1.3"
-  },
-  {
-    "path": "my-wget\\fs-extra\\path-is-absolute",
-    "name": "path-is-absolute",
-    "version": "1.0.0"
-  },
-  {
-    "path": "my-wget\\fs-extra\\rimraf",
-    "name": "rimraf",
-    "version": "2.5.2"
-  },
-  {
-    "path": "my-wget\\request\\aws-sign2",
+    "path": "npm-openweathermap/request/aws-sign2",
     "name": "aws-sign2",
     "version": "0.6.0"
   },
   {
-    "path": "my-wget\\request\\aws4",
+    "path": "npm-openweathermap/request/aws4",
     "name": "aws4",
     "version": "1.3.2"
   },
   {
-    "path": "my-wget\\request\\bl",
+    "path": "npm-openweathermap/request/bl",
     "name": "bl",
     "version": "1.0.3"
   },
   {
-    "path": "my-wget\\request\\caseless",
+    "path": "npm-openweathermap/request/caseless",
     "name": "caseless",
     "version": "0.11.0"
   },
   {
-    "path": "my-wget\\request\\combined-stream",
+    "path": "npm-openweathermap/request/combined-stream",
     "name": "combined-stream",
     "version": "1.0.5"
   },
   {
-    "path": "my-wget\\request\\extend",
+    "path": "npm-openweathermap/request/extend",
     "name": "extend",
     "version": "3.0.0"
   },
   {
-    "path": "my-wget\\request\\forever-agent",
+    "path": "npm-openweathermap/request/forever-agent",
     "name": "forever-agent",
     "version": "0.6.1"
   },
   {
-    "path": "my-wget\\request\\form-data",
+    "path": "npm-openweathermap/request/form-data",
     "name": "form-data",
     "version": "1.0.0-rc4"
   },
   {
-    "path": "my-wget\\request\\har-validator",
+    "path": "npm-openweathermap/request/har-validator",
     "name": "har-validator",
     "version": "2.0.6"
   },
   {
-    "path": "my-wget\\request\\hawk",
+    "path": "npm-openweathermap/request/hawk",
     "name": "hawk",
     "version": "3.1.3"
   },
   {
-    "path": "my-wget\\request\\http-signature",
+    "path": "npm-openweathermap/request/http-signature",
     "name": "http-signature",
     "version": "1.1.1"
   },
   {
-    "path": "my-wget\\request\\is-typedarray",
+    "path": "npm-openweathermap/request/is-typedarray",
     "name": "is-typedarray",
     "version": "1.0.0"
   },
   {
-    "path": "my-wget\\request\\isstream",
+    "path": "npm-openweathermap/request/isstream",
     "name": "isstream",
     "version": "0.1.2"
   },
   {
-    "path": "my-wget\\request\\json-stringify-safe",
+    "path": "npm-openweathermap/request/json-stringify-safe",
     "name": "json-stringify-safe",
     "version": "5.0.1"
   },
   {
-    "path": "my-wget\\request\\mime-types",
+    "path": "npm-openweathermap/request/mime-types",
     "name": "mime-types",
     "version": "2.1.10"
   },
   {
-    "path": "my-wget\\request\\node-uuid",
+    "path": "npm-openweathermap/request/node-uuid",
     "name": "node-uuid",
     "version": "1.4.7"
   },
   {
-    "path": "my-wget\\request\\oauth-sign",
+    "path": "npm-openweathermap/request/oauth-sign",
     "name": "oauth-sign",
     "version": "0.8.1"
   },
   {
-    "path": "my-wget\\request\\qs",
+    "path": "npm-openweathermap/request/qs",
     "name": "qs",
     "version": "6.0.2"
   },
   {
-    "path": "my-wget\\request\\stringstream",
+    "path": "npm-openweathermap/request/stringstream",
     "name": "stringstream",
     "version": "0.0.5"
   },
   {
-    "path": "my-wget\\request\\tough-cookie",
+    "path": "npm-openweathermap/request/tough-cookie",
     "name": "tough-cookie",
     "version": "2.2.2"
   },
   {
-    "path": "my-wget\\request\\tunnel-agent",
+    "path": "npm-openweathermap/request/tunnel-agent",
     "name": "tunnel-agent",
     "version": "0.4.2"
   },
   {
-    "path": "tar-fs\\pump\\once\\wrappy",
-    "name": "wrappy",
-    "version": "1.0.1"
+    "path": "npm-openweathermap/request/bl/readable-stream",
+    "name": "readable-stream",
+    "version": "2.0.6"
   },
   {
-    "path": "my-wget\\request\\combined-stream\\delayed-stream",
-    "name": "delayed-stream",
-    "version": "1.0.0"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\assert-plus",
-    "name": "assert-plus",
-    "version": "0.2.0"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\jsprim",
-    "name": "jsprim",
-    "version": "1.2.2"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\sshpk",
-    "name": "sshpk",
-    "version": "1.7.4"
-  },
-  {
-    "path": "tar-fs\\tar-stream\\readable-stream\\core-util-is",
-    "name": "core-util-is",
-    "version": "1.0.2"
-  },
-  {
-    "path": "tar-fs\\tar-stream\\readable-stream\\isarray",
-    "name": "isarray",
-    "version": "1.0.0"
-  },
-  {
-    "path": "tar-fs\\tar-stream\\readable-stream\\process-nextick-args",
-    "name": "process-nextick-args",
-    "version": "1.0.6"
-  },
-  {
-    "path": "tar-fs\\tar-stream\\readable-stream\\string_decoder",
-    "name": "string_decoder",
-    "version": "0.10.31"
-  },
-  {
-    "path": "tar-fs\\tar-stream\\readable-stream\\util-deprecate",
-    "name": "util-deprecate",
-    "version": "1.0.2"
-  },
-  {
-    "path": "my-wget\\request\\aws4\\lru-cache",
-    "name": "lru-cache",
-    "version": "4.0.1"
-  },
-  {
-    "path": "my-wget\\fs-extra\\rimraf\\glob",
-    "name": "glob",
-    "version": "7.0.3"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\chalk",
-    "name": "chalk",
-    "version": "1.1.3"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\commander",
-    "name": "commander",
-    "version": "2.9.0"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\is-my-json-valid",
-    "name": "is-my-json-valid",
-    "version": "2.13.1"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\pinkie-promise",
-    "name": "pinkie-promise",
-    "version": "2.0.0"
-  },
-  {
-    "path": "my-wget\\request\\hawk\\hoek",
-    "name": "hoek",
-    "version": "2.16.3"
-  },
-  {
-    "path": "my-wget\\request\\hawk\\boom",
-    "name": "boom",
-    "version": "2.10.1"
-  },
-  {
-    "path": "my-wget\\request\\hawk\\cryptiles",
-    "name": "cryptiles",
-    "version": "2.0.5"
-  },
-  {
-    "path": "my-wget\\request\\hawk\\sntp",
-    "name": "sntp",
-    "version": "1.0.9"
-  },
-  {
-    "path": "my-wget\\request\\mime-types\\mime-db",
-    "name": "mime-db",
-    "version": "1.22.0"
-  },
-  {
-    "path": "my-wget\\request\\form-data\\async",
+    "path": "npm-openweathermap/request/form-data/async",
     "name": "async",
     "version": "1.5.2"
   },
   {
-    "path": "my-wget\\request\\har-validator\\pinkie-promise\\pinkie",
-    "name": "pinkie",
-    "version": "2.0.4"
+    "path": "npm-openweathermap/request/aws4/lru-cache",
+    "name": "lru-cache",
+    "version": "4.0.1"
   },
   {
-    "path": "my-wget\\request\\http-signature\\jsprim\\extsprintf",
+    "path": "npm-openweathermap/request/combined-stream/delayed-stream",
+    "name": "delayed-stream",
+    "version": "1.0.0"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/assert-plus",
+    "name": "assert-plus",
+    "version": "0.2.0"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/jsprim",
+    "name": "jsprim",
+    "version": "1.2.2"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/sshpk",
+    "name": "sshpk",
+    "version": "1.7.4"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/chalk",
+    "name": "chalk",
+    "version": "1.1.3"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/commander",
+    "name": "commander",
+    "version": "2.9.0"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/is-my-json-valid",
+    "name": "is-my-json-valid",
+    "version": "2.13.1"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/pinkie-promise",
+    "name": "pinkie-promise",
+    "version": "2.0.0"
+  },
+  {
+    "path": "npm-openweathermap/request/hawk/hoek",
+    "name": "hoek",
+    "version": "2.16.3"
+  },
+  {
+    "path": "npm-openweathermap/request/hawk/boom",
+    "name": "boom",
+    "version": "2.10.1"
+  },
+  {
+    "path": "npm-openweathermap/request/hawk/cryptiles",
+    "name": "cryptiles",
+    "version": "2.0.5"
+  },
+  {
+    "path": "npm-openweathermap/request/hawk/sntp",
+    "name": "sntp",
+    "version": "1.0.9"
+  },
+  {
+    "path": "npm-openweathermap/request/mime-types/mime-db",
+    "name": "mime-db",
+    "version": "1.22.0"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/jsprim/extsprintf",
     "name": "extsprintf",
     "version": "1.0.2"
   },
   {
-    "path": "my-wget\\request\\http-signature\\jsprim\\json-schema",
+    "path": "npm-openweathermap/request/http-signature/jsprim/json-schema",
     "name": "json-schema",
     "version": "0.2.2"
   },
   {
-    "path": "my-wget\\request\\http-signature\\jsprim\\verror",
+    "path": "npm-openweathermap/request/http-signature/jsprim/verror",
     "name": "verror",
     "version": "1.3.6"
   },
   {
-    "path": "my-wget\\request\\har-validator\\chalk\\ansi-styles",
-    "name": "ansi-styles",
-    "version": "2.2.1"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\chalk\\escape-string-regexp",
-    "name": "escape-string-regexp",
-    "version": "1.0.5"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\chalk\\has-ansi",
-    "name": "has-ansi",
-    "version": "2.0.0"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\chalk\\strip-ansi",
-    "name": "strip-ansi",
-    "version": "3.0.1"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\chalk\\supports-color",
-    "name": "supports-color",
-    "version": "2.0.0"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\sshpk\\asn1",
-    "name": "asn1",
-    "version": "0.2.3"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\sshpk\\dashdash",
-    "name": "dashdash",
-    "version": "1.13.0"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\sshpk\\jsbn",
-    "name": "jsbn",
-    "version": "0.1.0"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\sshpk\\tweetnacl",
-    "name": "tweetnacl",
-    "version": "0.14.3"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\sshpk\\jodid25519",
-    "name": "jodid25519",
+    "path": "npm-openweathermap/request/bl/readable-stream/core-util-is",
+    "name": "core-util-is",
     "version": "1.0.2"
   },
   {
-    "path": "my-wget\\request\\http-signature\\sshpk\\ecc-jsbn",
-    "name": "ecc-jsbn",
-    "version": "0.1.1"
+    "path": "npm-openweathermap/request/bl/readable-stream/inherits",
+    "name": "inherits",
+    "version": "2.0.1"
   },
   {
-    "path": "my-wget\\request\\aws4\\lru-cache\\pseudomap",
+    "path": "npm-openweathermap/request/bl/readable-stream/isarray",
+    "name": "isarray",
+    "version": "1.0.0"
+  },
+  {
+    "path": "npm-openweathermap/request/bl/readable-stream/process-nextick-args",
+    "name": "process-nextick-args",
+    "version": "1.0.6"
+  },
+  {
+    "path": "npm-openweathermap/request/bl/readable-stream/string_decoder",
+    "name": "string_decoder",
+    "version": "0.10.31"
+  },
+  {
+    "path": "npm-openweathermap/request/bl/readable-stream/util-deprecate",
+    "name": "util-deprecate",
+    "version": "1.0.2"
+  },
+  {
+    "path": "npm-openweathermap/request/aws4/lru-cache/pseudomap",
     "name": "pseudomap",
     "version": "1.0.2"
   },
   {
-    "path": "my-wget\\request\\aws4\\lru-cache\\yallist",
+    "path": "npm-openweathermap/request/aws4/lru-cache/yallist",
     "name": "yallist",
     "version": "2.0.0"
   },
   {
-    "path": "my-wget\\request\\har-validator\\commander\\graceful-readlink",
-    "name": "graceful-readlink",
-    "version": "1.0.1"
+    "path": "npm-openweathermap/request/har-validator/pinkie-promise/pinkie",
+    "name": "pinkie",
+    "version": "2.0.4"
   },
   {
-    "path": "my-wget\\request\\har-validator\\is-my-json-valid\\generate-function",
+    "path": "npm-openweathermap/request/har-validator/chalk/ansi-styles",
+    "name": "ansi-styles",
+    "version": "2.2.1"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/chalk/escape-string-regexp",
+    "name": "escape-string-regexp",
+    "version": "1.0.5"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/chalk/has-ansi",
+    "name": "has-ansi",
+    "version": "2.0.0"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/chalk/strip-ansi",
+    "name": "strip-ansi",
+    "version": "3.0.1"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/chalk/supports-color",
+    "name": "supports-color",
+    "version": "2.0.0"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/sshpk/asn1",
+    "name": "asn1",
+    "version": "0.2.3"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/sshpk/dashdash",
+    "name": "dashdash",
+    "version": "1.13.0"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/sshpk/jsbn",
+    "name": "jsbn",
+    "version": "0.1.0"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/sshpk/tweetnacl",
+    "name": "tweetnacl",
+    "version": "0.14.3"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/sshpk/jodid25519",
+    "name": "jodid25519",
+    "version": "1.0.2"
+  },
+  {
+    "path": "npm-openweathermap/request/http-signature/sshpk/ecc-jsbn",
+    "name": "ecc-jsbn",
+    "version": "0.1.1"
+  },
+  {
+    "path": "npm-openweathermap/request/har-validator/is-my-json-valid/generate-function",
     "name": "generate-function",
     "version": "2.0.0"
   },
   {
-    "path": "my-wget\\request\\har-validator\\is-my-json-valid\\generate-object-property",
+    "path": "npm-openweathermap/request/har-validator/is-my-json-valid/generate-object-property",
     "name": "generate-object-property",
     "version": "1.2.0"
   },
   {
-    "path": "my-wget\\request\\har-validator\\is-my-json-valid\\jsonpointer",
+    "path": "npm-openweathermap/request/har-validator/is-my-json-valid/jsonpointer",
     "name": "jsonpointer",
     "version": "2.0.0"
   },
   {
-    "path": "my-wget\\fs-extra\\rimraf\\glob\\inflight",
-    "name": "inflight",
-    "version": "1.0.4"
+    "path": "npm-openweathermap/request/har-validator/is-my-json-valid/xtend",
+    "name": "xtend",
+    "version": "4.0.1"
   },
   {
-    "path": "my-wget\\fs-extra\\rimraf\\glob\\minimatch",
-    "name": "minimatch",
-    "version": "3.0.0"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\chalk\\has-ansi\\ansi-regex",
-    "name": "ansi-regex",
-    "version": "2.0.0"
-  },
-  {
-    "path": "my-wget\\request\\har-validator\\is-my-json-valid\\generate-object-property\\is-property",
-    "name": "is-property",
-    "version": "1.0.2"
-  },
-  {
-    "path": "my-wget\\request\\http-signature\\sshpk\\dashdash\\assert-plus",
-    "name": "assert-plus",
-    "version": "1.0.0"
-  },
-  {
-    "path": "my-wget\\fs-extra\\rimraf\\glob\\minimatch\\brace-expansion",
-    "name": "brace-expansion",
-    "version": "1.1.3"
-  },
-  {
-    "path": "my-wget\\fs-extra\\rimraf\\glob\\minimatch\\brace-expansion\\balanced-match",
-    "name": "balanced-match",
-    "version": "0.3.0"
-  },
-  {
-    "path": "my-wget\\fs-extra\\rimraf\\glob\\minimatch\\brace-expansion\\concat-map",
-    "name": "concat-map",
-    "version": "0.0.1"
+    "path": "npm-openweathermap/request/har-validator/commander/graceful-readlink",
+    "name": "graceful-readlink",
+    "version": "1.0.1"
   }
 ]

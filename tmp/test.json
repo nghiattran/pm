@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "get-ver": "1.0.0",
-    "my-wget": "^1.0.0",
-    "tar-fs": "1.10.0"
+    "npm-openweathermap": "*"
   },
   "devDependencies": {
     "ava": "*",
