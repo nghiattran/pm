@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "npm-openweathermap": "*"
+    "aws-sdk": "^2.1.38",
+    "my-wget": "^1.0.0",
+    "semver": "^5.1.0"
   },
   "devDependencies": {
     "ava": "*",
