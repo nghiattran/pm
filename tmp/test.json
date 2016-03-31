@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "get-ver": "1.0.0",
+    "aws-sdk": "^2.1.38",
     "my-wget": "^1.0.0",
-    "tar-fs": "1.10.0"
+    "semver": "^5.1.0"
   },
   "devDependencies": {
     "ava": "*",
