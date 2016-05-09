@@ -1,12 +1,14 @@
 /// <reference path="node.d.ts" />
 
-var semver = require('semver')
-var getVer = require('get-ver')
-var bluebird = require('bluebird')
-var GetPkg = bluebird.promisifyAll(require('./getPkg'))
-var _ = require('lodash')
-var path = require('path')
-var fs = require('fs')
+import * as semver from 'semver'
+import * as getVer from 'get-ver'
+import * as bluebird from 'bluebird'
+import * as _ from 'lodash'
+import * as path from 'path'
+import * as fs from 'fs'
+import * as GetPkg from './getPkg'
+
+GetPkg = bluebird.promisifyAll(GetPkg)
 
 /**
  * [getAPkgDependencies description]

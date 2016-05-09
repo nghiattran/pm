@@ -1,5 +1,5 @@
 {
-  "name": "mod",
+  "name": "private-but-shared",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,6 +8,7 @@
     "my-wget": "^1.0.0",
     "semver": "^5.1.0"
   },
+  "private": true,
   "devDependencies": {
     "ava": "*",
     "xo": "*"
@@ -19,6 +20,6 @@
     "type": "git",
     "url": "mod"
   },
-  "author": "",
+  "author": "nghiattran3",
   "license": "ISC"
 }

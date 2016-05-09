@@ -4,7 +4,8 @@ var zlib = require('zlib');
 var tar = require('tar-fs');
 var path = require('path');
 var request = require('request');
-var UPLOAD_URL = 'http://localhost:9000/package';
+var rimraf = require('rimraf');
+var UPLOAD_URL = 'http://localhost:9000/api/package';
 var BASE_DIR = __dirname;
 var tempDir = '.tmp';
 var tempGzipFile = 'tmp.tgz';
@@ -12,19 +13,22 @@ var tempGzipFile = 'tmp.tgz';
  * fromPath: path to base pkg
  */
 function upload(fromPath) {
+    var form = JSON.parse(fs.readFileSync(path.join(fromPath, 'test.json')));
     // TODO: This should a json file
-    var json = fs.createReadStream(path.join(fromPath, 'index.js'));
+    var json = fs.createReadStream(path.join(fromPath, 'test.json'));
     compress(fromPath, function (toPath) {
         var pkg = fs.createReadStream(path.join(toPath, tempGzipFile));
         var formData = {
-            pkg: pkg,
-            json: json
+            json: json,
+            package: pkg
         };
-        // doUpload(formData)
-        // rimraf(toPath, (err) => {
-        //   if (err) throw err;
-        //   console.log('successfully deleted ' + toPath);
-        // });
+        console.log(form);
+        doUpload(formData, form);
+        rimraf(toPath, function (err) {
+            if (err)
+                throw err;
+            console.log('successfully deleted ' + toPath);
+        });
     });
 }
 function compress(fromPath, cb) {
@@ -66,11 +70,24 @@ function readIgnoreFile(fromPath) {
 /**
  * Perfom upload
  */
-function doUpload(formData) {
-    var headers = {
-        'Content-encoding': 'gzip'
+function doUpload(formData, form) {
+    var pkg = {
+        name: form.name,
+        version: form.version,
+        author: form.author,
+        private: form.private,
+        json: form
     };
-    return request.post({ url: UPLOAD_URL, formData: formData, headers: headers }, function optionalCallback(err, httpResponse, body) {
+    var options = {
+        url: UPLOAD_URL,
+        formData: formData,
+        qs: pkg,
+        headers: {
+            'Content-encoding': 'gzip',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    };
+    return request.post(options, function (err, httpResponse, body) {
         if (err) {
             return console.error('upload failed:', err);
         }

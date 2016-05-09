@@ -128,6 +128,7 @@ function treeLine(tree, line = '') {
   let i = 0
   for (let pkg in tree) {
     const pkgInfo = tree[pkg].name + '@' + tree[pkg].version
+    
     // If the pkg is the only one or is the last one
     // Display with '└─name'
     // else

@@ -1,12 +1,12 @@
 /// <reference path="node.d.ts" />
 "use strict";
 var semver = require('semver');
-var getVer = require('get-ver');
 var bluebird = require('bluebird');
-var GetPkg = bluebird.promisifyAll(require('./getPkg'));
 var _ = require('lodash');
 var path = require('path');
 var fs = require('fs');
+var GetPkg = require('./getPkg');
+GetPkg = bluebird.promisifyAll(GetPkg);
 /**
  * [getAPkgDependencies description]
  * Get all dependencies of a set of pkgs

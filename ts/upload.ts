@@ -8,7 +8,7 @@ import * as readdirp from 'readdirp'
 import * as rimraf from 'rimraf'
 import * as isGlob from 'isGlob'
 
-const UPLOAD_URL = 'http://localhost:9000/package'
+const UPLOAD_URL = 'http://localhost:9000/api/package'
 
 const BASE_DIR = __dirname
 const tempDir = '.tmp'
@@ -19,19 +19,20 @@ const tempGzipFile = 'tmp.tgz'
  */
 
 function upload(fromPath) {
+  const form = JSON.parse(fs.readFileSync(path.join(fromPath, 'test.json')))  
   // TODO: This should a json file
-  const json = fs.createReadStream(path.join(fromPath, 'index.js'))
+  const json = fs.createReadStream(path.join(fromPath, 'test.json'))
   compress(fromPath, function(toPath) {
     const pkg = fs.createReadStream(path.join(toPath, tempGzipFile))
     const formData = {
-      pkg,
-      json
+      json,
+      package:pkg,
     }
-    // doUpload(formData)
-    // rimraf(toPath, (err) => {
-    //   if (err) throw err;
-    //   console.log('successfully deleted ' + toPath);
-    // });
+    doUpload(formData, form);
+    rimraf(toPath, (err) => {
+      if (err) throw err;
+      console.log('successfully deleted ' + toPath);
+    });
   })
 }
 
@@ -80,12 +81,26 @@ function readIgnoreFile(fromPath) {
 /**
  * Perfom upload
  */
-function doUpload (formData) {
-  var headers = {
-    'Content-encoding': 'gzip'
-  }
+function doUpload (formData, form) {
+  var pkg = {
+    name: form.name,
+    version: form.version,
+    author: form.author,
+    private: form.private,
+    json: form
+  };
 
-  return request.post({url: UPLOAD_URL, formData:formData, headers:headers}, function optionalCallback(err, httpResponse, body) {
+  var options = {
+    url: UPLOAD_URL, 
+    formData:formData, 
+    qs: pkg,
+    headers: { 
+      'Content-encoding': 'gzip',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+}
+
+return request.post(options, function(err, httpResponse, body) {
     if (err) {
       return console.error('upload failed:', err);
     }

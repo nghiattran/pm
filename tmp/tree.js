@@ -1,13 +1,11 @@
-/// <reference path="node.d.ts" />
 'use strict';
 var endash = require('./components/endash');
-var getVer = require('get-ver');
 var bluebird = require('bluebird');
-var GetPkg = bluebird.promisifyAll(require('./getPkg'));
 var _ = require('lodash');
 var path = require('path');
+var GetPkg = require('./getPkg');
+GetPkg = bluebird.promisifyAll(GetPkg);
 var pkgInfo = [];
-var fs = require('fs');
 /**
  * [makeTree description]
  * Construct dependency tree from pkg list

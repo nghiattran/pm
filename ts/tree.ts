@@ -1,15 +1,17 @@
-/// <reference path="node.d.ts" />
-
 'use strict'
 
-var endash = require('./components/endash')
-var getVer = require('get-ver')
-var bluebird = require('bluebird')
-var GetPkg = bluebird.promisifyAll(require('./getPkg'))
-var _ = require('lodash')
-var path = require('path')
+import * as endash from './components/endash'
+import * as semver from 'semver'
+import * as getVer from 'get-ver'
+import * as bluebird from 'bluebird'
+import * as _ from 'lodash'
+import * as path from 'path'
+import * as fs from 'fs'
+import * as GetPkg from './getPkg'
+
+GetPkg = bluebird.promisifyAll(GetPkg)
+
 var pkgInfo = []
-var fs = require('fs')
 
 /**
  * [makeTree description]

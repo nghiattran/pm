@@ -1,11 +1,12 @@
 {
   "name": "mod",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "get-ver": "1.0.0"
   },
+  "private": true,
   "devDependencies": {},
   "scripts": {
     "test": "test"
