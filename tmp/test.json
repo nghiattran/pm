@@ -1,6 +1,6 @@
 {
-  "name": "private-but-shared",
-  "version": "1.0.0",
+  "name": "get-ver",
+  "version": "1.2.3",
   "description": "",
   "main": "index.js",
   "dependencies": {
