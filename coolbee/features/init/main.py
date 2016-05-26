@@ -1,11 +1,9 @@
-# from __future__ import absolute_import
+
 import argparse, os
 from sys import argv, stderr
-from os import listdir
-from os.path import isfile, join
-# from python.constants import USER_CURRENT_DIR, APP_GIT_FOLDER
-from ...constants import USER_CURRENT_DIR, APP_GIT_FOLDER
+from utils.constants import USER_CURRENT_DIR, APP_GIT_FOLDER
 
+__help__ = "init"
 
 def main():
     parser = argparse.ArgumentParser(prog="init",
@@ -53,4 +51,5 @@ def process():
     print "helllo"
 
 
-main()
+if __name__ == '__main__':
+    main()

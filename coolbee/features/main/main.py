@@ -1,32 +1,29 @@
-import argparse, os
-from sys import argv
-from os import listdir
-from os.path import isfile, join
-from coolbee.utils import get_features
+import argparse, os, sys
+import importlib
+import imp
+from os import path
+from utils.main import get_features
+from utils.constants import FEATURE_DIR
+
+__help__ = "main"
 
 def main(argv = ['-h']):
 
-    # parser.add_argument('bar')
-    # parser.add_argument('move', choices=['rock', 'paper', 'scissors'])
-    parser = argparse.ArgumentParser(description='Process some integers.')
-    # parser.add_argument('integers', metavar='N', type=int, nargs='+',
-    #                     help='an integer for the accumulator')
-    # parser.add_argument('--sum', dest='accumulate', action='store_const',
-    #                     const=sum, default=max,
-    #                     help='sum the integers (default: find the max)')
-    # parser.add_argument('move', choices=['rock', 'paper', 'scissors'])
-    #
-    main = parser.add_argument_group("Main")
+    parser = argparse.ArgumentParser(description='Coolbee command line',
+                                     add_help=False)
 
-    for feature in utils.get_features():
-        main.add_argument(feature, help='bar help')
+    main = parser.add_argument_group("Main commands")
+
+    for feature in get_features():
+        # Exclude main
+        if feature != "main":
+            module_name = "features.{0}.main".format(feature)
+            module = importlib.import_module(module_name)
+            main.add_argument(feature, help=module.__help__)
 
     if len(argv) == 1:
         parser.print_help()
     else:
-        # parser.parse_args(['rock', 'paper'])
-        args =  parser.parse_args(argv)
-        print args.move
-        # print(args.accumulate(args.integers))
+        args =  main.parse_args(argv)
 
 main()
