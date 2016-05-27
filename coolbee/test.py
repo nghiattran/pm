@@ -21,7 +21,7 @@ repo = Repository(DIR)
 # author = Signature('Alice Author', 'alice@authors.tld')
 # committer = Signature('Cecil Committer', 'cecil@committers.tld')
 # tree = repo.TreeBuilder().write()
-# print tree
+# # print tree
 # repo.create_commit(
 #     'refs/heads/master', # the name of the reference to update
 #     author, committer, 'one line commit message\n\ndetailed commit message',

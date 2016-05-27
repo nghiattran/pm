@@ -1,8 +1,15 @@
+import os
 from sys import argv
-from utils.main import get_features, get_strategies
-from strategies.python import Python
+from utils.main import get_features, get_languages, get_language
+from languages.python import Python
+from utils.constants import MAIN_FILE_NAME, COOLBEE_PATH, FEATURE_DIR
 
-print get_strategies()
+
+def get_main_file(path):
+    for filename in os.listdir(path):
+        if filename.startswith(MAIN_FILE_NAME + "."):
+            return filename
+    return None
 
 if __name__ == '__main__':
     # Pop file name
@@ -10,7 +17,7 @@ if __name__ == '__main__':
 
     # If no command specified, exec help for main
     if len(argv) == 0:
-        Python().execute(args=argv)
+        Python().execute_command(args=argv, command="main")
 
     features = get_features()
 
@@ -19,8 +26,18 @@ if __name__ == '__main__':
 
     if command in features:
         argv.pop(0)
-        Python().execute(args=argv, command=command)
+
+        # Main file for a command
+        filename = get_main_file(os.path.join(FEATURE_DIR, command))
+
+        languages = get_languages()
+
+        # Find out what language the file is written and execute the file
+        for language in languages:
+            language_instance = get_language(language)()
+            if language_instance.is_language(filename):
+                # print filename
+                print language_instance.get_name()
+                language_instance.execute_command(args=argv, command=command)
     else:
-        Python().execute(args=argv)
-
-
+        Python().execute_command(args=argv, command="main")

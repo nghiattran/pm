@@ -20,3 +20,8 @@ class BaseStrategy(object):
     def is_language(self, filename):
         return is_file_extension(filename, self.__extensions)
 
+    def get_name(self):
+        return self.__language
+
+    def get_extensions(self):
+        return self.__extensions

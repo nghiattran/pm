@@ -1,29 +1,36 @@
 import argparse, os, sys
 import importlib
 import imp
+from sys import argv
 from os import path
 from utils.main import get_features
 from utils.constants import FEATURE_DIR
 
 __help__ = "main"
 
-def main(argv = ['-h']):
-
+def main():
     parser = argparse.ArgumentParser(description='Coolbee command line',
+                                     prog="coolbee",
+                                     usage="%(prog)s [command]\n",
                                      add_help=False)
 
-    main = parser.add_argument_group("Main commands")
+    main = parser.add_argument_group("commands")
 
     for feature in get_features():
         # Exclude main
         if feature != "main":
-            module_name = "features.{0}.main".format(feature)
-            module = importlib.import_module(module_name)
-            main.add_argument(feature, help=module.__help__)
+            link = path.join(FEATURE_DIR, feature, "description")
+
+            try:
+                help = open(link).read()
+            except:
+                help = ""
+
+            main.add_argument(feature, help=help)
 
     if len(argv) == 1:
         parser.print_help()
     else:
-        args =  main.parse_args(argv)
+        args =  parser.parse_args(argv)
 
 main()
