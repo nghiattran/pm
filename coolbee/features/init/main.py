@@ -2,9 +2,8 @@ import argparse, os
 from sys import argv, stderr
 from os import path
 import utils.main as utils
-from utils.constants import USER_CURRENT_DIR, APP_GIT_FOLDER, \
-    USER_CURRENT_DIR, APP_JSON, USER_GIT_FOLDER, APP_GIT_BRANCH
-from pygit2 import init_repository, Repository, Diff, Signature
+from utils.constants import *
+from pygit2 import init_repository, Repository, Diff, Signature, Remote
 import json
 import shutil
 
@@ -48,7 +47,6 @@ def process():
     # init git
     repo = init_repository(USER_GIT_FOLDER)
     # print USER_GIT_FOLDER
-    # repo = Repository(USER_GIT_FOLDER)
     # move .git to .coolbee
     tmp_path = path.join(USER_GIT_FOLDER, '.git')
     try:
@@ -69,9 +67,22 @@ def process():
     utils.commit(repo)
 
     # add json file
-    with open(path.join(USER_CURRENT_DIR, APP_JSON), 'w') as outfile:
-        json.dump(info, outfile)
+    path_to_json = path.join(USER_CURRENT_DIR, APP_JSON)
+    if not path.isfile(path_to_json):
+        with open(path_to_json, 'w') as outfile:
+            json.dump(info, outfile)
 
+
+    # repo = Repository(USER_GIT_FOLDER)
+    # print repo.remotes[APP_REMOTE['name']]
+    try:
+        remote = repo.remotes[APP_REMOTE['name']]
+    except:
+        remote = repo.remotes.create(APP_REMOTE['name'], APP_REMOTE['url'])
+        repo.remotes.set_push_url(APP_REMOTE['name'], remote.url)
+    finally:
+        print remote
+        print repo.remotes[APP_REMOTE['name']]
 
 
 if __name__ == '__main__':

@@ -1,9 +1,12 @@
 import argparse
+import getpass
+import tarfile
+
 from os import path
 from sys import argv, stderr
 from utils.constants import *
 import utils.main as utils
-from pygit2 import Repository, Signature
+from pygit2 import Repository, Signature, UserPass, RemoteCallbacks
 
 def main():
     parser = argparse.ArgumentParser(prog='public',
@@ -15,10 +18,10 @@ def main():
 
 def publish():
     # preprocess
-    preprocess()
+    package_info = preprocess()
 
     # process
-    process()
+    process(package_info)
 
     # postprocess
     postprocess()
@@ -39,20 +42,36 @@ def preprocess():
         exit(1)
 
     # read json file
+    return utils.read_json(USER_APP_JSON)
 
-def process():
-    print USER_GIT_FOLDER
+def process(package_info):
     try:
         repo = Repository(USER_GIT_FOLDER)
-        print repo.listall_branches()
-        for commit in repo.walk(repo.head.target):
-            print commit.message
-        # exit(1)
+        # for commit in repo.walk(repo.head.target):
+        #     print commit.message
     except:
         stderr.write('corrupt')
         exit(1)
 
-    utils.commit(repo, 'changed')
+    # utils.commit(repo, package_info['version'])
+
+    # name = '{0}@{1}-{2}'.format(package_info['author']['name'].lower(),
+    #                            package_info['name'].lower(),
+    #                            package_info['version'])
+    # with tarfile.open('{0}.tar'.format(name), 'w') as archive:
+    #     repo.write_archive(archive=archive, treeish=repo.head.target)
+    #
+    # for commit in repo.walk(repo.head.target):
+    #     print commit.message
+
+    # Login to get credentials
+    username, password = utils.login()
+
+    # Git push using username and password
+    remote = repo.remotes[APP_REMOTE['name']]
+    credentials = UserPass(username, password)
+    callbacks = RemoteCallbacks(credentials=credentials)
+    remote.push([APP_GIT_BRANCH], callbacks)
 
 
 def postprocess():

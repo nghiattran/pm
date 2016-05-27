@@ -1,3 +1,6 @@
+import getpass
+import json
+
 from os import path,listdir
 import importlib
 from constants import *
@@ -51,3 +54,17 @@ def commit(repo, message='init package'):
         tree,
         [] if len(repo.listall_branches()) == 0 else [repo.head.target]
     )
+
+def read_json(filepath):
+    try:
+        with open(filepath) as data_file:
+            return json.load(data_file)
+    except IOError:
+        raise IOError('Could not read file: '+ filepath)
+    except ValueError:
+        raise ValueError('Invalid json ' + filepath)
+
+def login():
+    username = raw_input("Email: ")
+    password = getpass.getpass()
+    return username, password

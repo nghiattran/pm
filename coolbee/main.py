@@ -18,6 +18,7 @@ if __name__ == '__main__':
     # If no command specified, exec help for main
     if len(argv) == 0:
         Python().execute_command(args=argv, command="main")
+        exit()
 
     features = get_features()
 
