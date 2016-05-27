@@ -4,7 +4,10 @@ import json
 from os import path,listdir
 import importlib
 from constants import *
-from pygit2 import Signature
+from pygit2 import Signature, GIT_OBJ_COMMIT
+from errors import CleanDirError
+
+tmp_sig = {'name': 'me', 'email': 'me.email.com'}
 
 # Get all main commands
 def get_features():
@@ -37,23 +40,34 @@ def is_file_extension(filename, extensions = IGNORED_EXTENSIONS):
     return False
 
 
-def commit(repo, message='init package'):
+def commit(repo, message='init package', branch=APP_GIT_BRANCH):
+    if repo.diff().patch == None:
+        raise CleanDirError('No changes detected')
+
     index = repo.index
-    # Add all changes
+    # Add all changes to git
     index.add_all()
     index.write()
 
     tree = index.write_tree()
-    author = Signature('Alice Author', 'alice@authors.tld')
-    committer = Signature('Cecil Committer', 'cecil@committers.tld')
+    author = Signature(tmp_sig['name'], tmp_sig['email'])
+
+    # Get branch to push
+    branch = repo.lookup_branch(branch)
 
     # Create commit
     repo.create_commit(
-        APP_GIT_BRANCH,
-        author, committer, message,
+        APP_GIT_REF,
+        author, author, message,
         tree,
-        [] if len(repo.listall_branches()) == 0 else [repo.head.target]
+        [] if len(repo.listall_branches()) == 0 else [branch.target]
     )
+
+def create_tag(repo, name, branch=APP_GIT_BRANCH):
+    branch = repo.lookup_branch(branch)
+    author = Signature(tmp_sig['name'], tmp_sig['email'])
+    target = branch.target
+    repo.create_tag(name, target, GIT_OBJ_COMMIT, author, name)
 
 def read_json(filepath):
     try:

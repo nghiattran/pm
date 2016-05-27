@@ -4,11 +4,12 @@ from os import path
 APP_NAME = 'git'
 APP_GIT_FOLDER = '.' + APP_NAME
 APP_JSON = APP_NAME + '.json'
-APP_GIT_BRANCH = 'refs/heads/test'
 APP_REMOTE = {
     'name': 'origin',
     'url': 'https://github.com/nghiattran/pm.git'
 }
+APP_GIT_BRANCH = 'test'
+APP_GIT_REF = 'refs/heads/{0}'.format(APP_GIT_BRANCH)
 
 MAIN_FILE_NAME = 'main'
 MAIN_FILE_PYTHON_NAME = MAIN_FILE_NAME + '.py'
@@ -16,8 +17,8 @@ MAIN_FILE_PYTHON_NAME = MAIN_FILE_NAME + '.py'
 USER_CURRENT_DIR = os.getcwd()
 USER_GIT_FOLDER = path.join(USER_CURRENT_DIR, APP_GIT_FOLDER)
 USER_APP_JSON = path.join(USER_CURRENT_DIR, APP_JSON)
-USER_EMAIL = 'nghiattran3@gmail.com'
-USER_PASSWORD = 'Noname1184'
+USER_EMAIL = 'email@email.com'
+USER_PASSWORD = 'password'
 
 
 COOLBEE_PATH = path.normpath(path.join(path.dirname(

@@ -37,8 +37,6 @@ if __name__ == '__main__':
         for language in languages:
             language_instance = get_language(language)()
             if language_instance.is_language(filename):
-                # print filename
-                print language_instance.get_name()
                 language_instance.execute_command(args=argv, command=command)
     else:
         Python().execute_command(args=argv, command="main")

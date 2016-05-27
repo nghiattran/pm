@@ -1,15 +1,16 @@
 import argparse
 import getpass
 import tarfile
-
+import semver
 from os import path
 from sys import argv, stderr
 from utils.constants import *
 import utils.main as utils
-from pygit2 import Repository, Signature, UserPass, RemoteCallbacks
+from errors import CleanDirError
+from pygit2 import Repository, UserPass, RemoteCallbacks
 
 def main():
-    parser = argparse.ArgumentParser(prog='public',
+    parser = argparse.ArgumentParser(prog='publish',
                                  usage='%(prog)s [options] [paths...]\n',
                                  add_help=True)
 
@@ -42,18 +43,32 @@ def preprocess():
         exit(1)
 
     # read json file
-    return utils.read_json(USER_APP_JSON)
+    json = utils.read_json(USER_APP_JSON)
+
+    # check if valid version
+    try:
+        semver.parse(json['version'])
+    except ValueError:
+        print 'Error: "{0}" is an invalid version, checkout ' \
+              'http://semver.org/ for more detail'.format(json['version'])
+        exit(1)
+
+    return json
 
 def process(package_info):
+
     try:
         repo = Repository(USER_GIT_FOLDER)
-        # for commit in repo.walk(repo.head.target):
-        #     print commit.message
     except:
         stderr.write('corrupt')
         exit(1)
 
-    # utils.commit(repo, package_info['version'])
+    try:
+        utils.commit(repo, package_info['version'])
+    except CleanDirError:
+        stderr.write('Failed to publish, directory clean\n')
+        exit(1)
+
 
     # name = '{0}@{1}-{2}'.format(package_info['author']['name'].lower(),
     #                            package_info['name'].lower(),
@@ -61,8 +76,7 @@ def process(package_info):
     # with tarfile.open('{0}.tar'.format(name), 'w') as archive:
     #     repo.write_archive(archive=archive, treeish=repo.head.target)
     #
-    # for commit in repo.walk(repo.head.target):
-    #     print commit.message
+
 
     # Login to get credentials
     username, password = utils.login()
@@ -71,11 +85,14 @@ def process(package_info):
     remote = repo.remotes[APP_REMOTE['name']]
     credentials = UserPass(username, password)
     callbacks = RemoteCallbacks(credentials=credentials)
-    remote.push([APP_GIT_BRANCH], callbacks)
+    remote.push([APP_GIT_REF], callbacks)
+
+    # Create a tag
+    utils.create_tag(repo, package_info['version'])
 
 
 def postprocess():
-    pass
+    print 'Package has been published'
 
 if __name__ == '__main__':
     main()
