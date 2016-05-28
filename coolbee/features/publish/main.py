@@ -27,19 +27,8 @@ def publish():
     postprocess()
 
 def preprocess():
-    # check if the directory is init yet
-    # if yes, go on
-    # if no, exit
-    if not path.isdir(path.join(USER_CURRENT_DIR, APP_GIT_FOLDER)):
-        stderr.write('Error: This is not a {0} package.\n'.format(APP_NAME))
-        exit(1)
-
-    # check if APP_JSON exists
-    # if yes, go on
-    # if no, exit
-    if not path.isfile(path.join(USER_CURRENT_DIR, APP_JSON)):
-        stderr.write('Error: Missing {0} file.\n'.format(APP_JSON))
-        exit(1)
+    # Verify if this is a package
+    utils.verify_package()
 
     # read json file
     json = utils.read_package_json()

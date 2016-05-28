@@ -28,7 +28,6 @@ def init_project():
 
     # postprocess
     postprocess()
-    print 'Initialized Coolbee for {0}.'.format(path.basename(USER_CURRENT_DIR))
 
 def preprocess():
     # check if the directory is init yet
@@ -40,8 +39,8 @@ def preprocess():
 
 
 def postprocess():
-    # print out notification
-    pass
+    print 'Initialized {0} for {1}.'.format(APP_NAME.capitalize(), path.basename(
+        USER_CURRENT_DIR))
 
 def process():
     # init git
@@ -64,7 +63,7 @@ def process():
     f.close()
 
     # create first commit
-    utils.commit(repo)
+    utils.commit(repo, init=True)
 
     # add json file
     path_to_json = path.join(USER_CURRENT_DIR, APP_JSON)
@@ -72,17 +71,12 @@ def process():
         with open(path_to_json, 'w') as outfile:
             json.dump(info, outfile)
 
-
-    # repo = Repository(USER_GIT_FOLDER)
-    # print repo.remotes[APP_REMOTE['name']]
+    # add a remote
     try:
         remote = repo.remotes[APP_REMOTE['name']]
     except:
         remote = repo.remotes.create(APP_REMOTE['name'], APP_REMOTE['url'])
         repo.remotes.set_push_url(APP_REMOTE['name'], remote.url)
-    finally:
-        print remote
-        print repo.remotes[APP_REMOTE['name']]
 
 
 if __name__ == '__main__':

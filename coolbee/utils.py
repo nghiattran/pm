@@ -1,12 +1,11 @@
 import getpass
 import importlib
 import json
+from sys import stderr
 
 from constants import *
 from errors import CleanDirError
-from pygit2 import Signature, GIT_OBJ_COMMIT
-
-tmp_sig = {'name': 'me', 'email': 'me.email.com'}
+from pygit2 import Signature, GIT_OBJ_COMMIT, GIT_SORT_TOPOLOGICAL
 
 # Get all main commands
 def get_features():
@@ -39,8 +38,8 @@ def is_file_extension(filename, extensions = IGNORED_EXTENSIONS):
     return False
 
 
-def commit(repo, message='init package', branch=APP_GIT_BRANCH):
-    if repo.diff().patch == None:
+def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False):
+    if repo.diff().patch == None and not init:
         raise CleanDirError('No changes detected')
 
     index = repo.index
@@ -49,7 +48,7 @@ def commit(repo, message='init package', branch=APP_GIT_BRANCH):
     index.write()
 
     tree = index.write_tree()
-    author = Signature(tmp_sig['name'], tmp_sig['email'])
+    author = Signature(USER['name'], USER['email'])
 
     # Get branch to push
     branch = repo.lookup_branch(branch)
@@ -64,7 +63,7 @@ def commit(repo, message='init package', branch=APP_GIT_BRANCH):
 
 def create_tag(repo, name, branch=APP_GIT_BRANCH):
     branch = repo.lookup_branch(branch)
-    author = Signature(tmp_sig['name'], tmp_sig['email'])
+    author = Signature(USER['name'], USER['email'])
     target = branch.target
     repo.create_tag(name, target, GIT_OBJ_COMMIT, author, name)
 
@@ -90,5 +89,34 @@ def read_json(filepath):
     except ValueError:
         raise ValueError('Invalid json ' + filepath)
 
+# Read package json in the root project directory
 def read_package_json():
     return read_json(path.join(find_root(), USER_APP_JSON))
+
+# Veryfy is the package is initialized correctly
+def verify_package():
+    # check if the directory is init yet
+    # if yes, go on
+    # if no, exit
+    if not path.isdir(path.join(find_root(), APP_GIT_FOLDER)):
+        stderr.write('Error: This is not a {0} package.\n'.format(APP_NAME))
+        exit(1)
+
+    # check if APP_JSON exists
+    # if yes, go on
+    # if no, exit
+    if not path.isfile(path.join(find_root(), APP_JSON)):
+        stderr.write('Error: Missing {0} file.\n'.format(APP_JSON))
+        exit(1)
+
+def get_commits(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
+    if target is None:
+        target = repo.head.target
+
+    dict = {}
+    for commit in repo.walk(target, order):
+        if commit.message in dict.keys():
+            raise KeyError('Version must be unique')
+
+        dict[commit.message] = commit
+    return dict
