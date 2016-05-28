@@ -12,6 +12,11 @@ APP_GIT_BRANCH = 'master'
 APP_GIT_REF = 'refs/heads/{0}'.format(APP_GIT_BRANCH)
 APP_LOCAL_DIR_NAME = '{0}_packages'.format(APP_NAME)
 APP_GlObAL_DIR_NAME = '.{0}'.format(APP_LOCAL_DIR_NAME)
+APP_GlObAL_DIR = path.join(os.environ['HOME'], APP_GlObAL_DIR_NAME)
+APP_CACHE_DIR_NAME = 'cache'
+APP_CACHE_DIR = path.join(APP_GlObAL_DIR, APP_CACHE_DIR_NAME)
+APP_ARCHIVE_DIR_NAME = 'archive'
+APP_ARCHIVE_DIR = path.join(APP_GlObAL_DIR, APP_ARCHIVE_DIR_NAME)
 
 MAIN_FILE_NAME = 'main'
 MAIN_FILE_PYTHON_NAME = MAIN_FILE_NAME + '.py'
@@ -19,6 +24,7 @@ MAIN_FILE_PYTHON_NAME = MAIN_FILE_NAME + '.py'
 USER_CURRENT_DIR = os.getcwd()
 USER_GIT_FOLDER = path.join(USER_CURRENT_DIR, APP_GIT_FOLDER)
 USER_APP_JSON = path.join(USER_CURRENT_DIR, APP_JSON)
+USER_PACKAGE_FOLDER = path.join(USER_CURRENT_DIR, APP_LOCAL_DIR_NAME)
 USER = {
     'email': 'nghiattran3@gmail.com',
     'password': 'password',

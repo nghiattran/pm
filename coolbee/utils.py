@@ -120,3 +120,23 @@ def get_commits(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
 
         dict[commit.message] = commit
     return dict
+
+def get_commit_list(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
+    if target is None:
+        target = repo.head.target
+
+    list = []
+    commits = get_commits(repo=repo, target=target, order=order)
+    for commit in commits:
+        list.append(commit)
+
+    return list
+
+# Get all version of a cached package
+def get_versions_cached(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
+    if target is None:
+        target = repo.head.target
+
+    versions = get_commits(repo=repo, target=target, order=order)
+
+    return versions

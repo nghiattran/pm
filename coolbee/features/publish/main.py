@@ -2,7 +2,7 @@ import argparse
 from sys import stderr
 
 import coolbee.utils as utils
-import semver
+import semver_adapter
 from coolbee.constants import *
 from coolbee.errors import CleanDirError
 from pygit2 import Repository, UserPass, RemoteCallbacks
@@ -35,7 +35,7 @@ def preprocess():
 
     # check if valid version
     try:
-        semver.parse(json['version'])
+        semver_adapter.parse(json['version'])
     except ValueError:
         print 'Error: "{0}" is an invalid version, checkout ' \
               'http://semver.org/ for more detail'.format(json['version'])
