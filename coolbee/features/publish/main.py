@@ -1,13 +1,12 @@
 import argparse
-import getpass
-import tarfile
+from sys import stderr
+
+import coolbee.utils as utils
 import semver
-from os import path
-from sys import argv, stderr
-from utils.constants import *
-import utils.main as utils
-from errors import CleanDirError
+from coolbee.constants import *
+from coolbee.errors import CleanDirError
 from pygit2 import Repository, UserPass, RemoteCallbacks
+
 
 def main():
     parser = argparse.ArgumentParser(prog='publish',
@@ -43,7 +42,7 @@ def preprocess():
         exit(1)
 
     # read json file
-    json = utils.read_json(USER_APP_JSON)
+    json = utils.read_package_json()
 
     # check if valid version
     try:
@@ -56,9 +55,9 @@ def preprocess():
     return json
 
 def process(package_info):
-
+    root = path.join(utils.find_root(), APP_GIT_FOLDER)
     try:
-        repo = Repository(USER_GIT_FOLDER)
+        repo = Repository(root)
     except:
         stderr.write('corrupt')
         exit(1)
@@ -66,17 +65,14 @@ def process(package_info):
     try:
         utils.commit(repo, package_info['version'])
     except CleanDirError:
-        stderr.write('Failed to publish, directory clean\n')
+        stderr.write('Nothing to publish, directory clean.\n')
         exit(1)
-
 
     # name = '{0}@{1}-{2}'.format(package_info['author']['name'].lower(),
     #                            package_info['name'].lower(),
     #                            package_info['version'])
     # with tarfile.open('{0}.tar'.format(name), 'w') as archive:
     #     repo.write_archive(archive=archive, treeish=repo.head.target)
-    #
-
 
     # Login to get credentials
     username, password = utils.login()

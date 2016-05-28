@@ -3,7 +3,7 @@ import json
 
 from os import path,listdir
 import importlib
-from constants import *
+from coolbee.utils.constants import *
 from pygit2 import Signature, GIT_OBJ_COMMIT
 from errors import CleanDirError
 
@@ -69,6 +69,19 @@ def create_tag(repo, name, branch=APP_GIT_BRANCH):
     target = branch.target
     repo.create_tag(name, target, GIT_OBJ_COMMIT, author, name)
 
+def login():
+    username = raw_input("Email: ")
+    password = getpass.getpass()
+    return username, password
+
+def find_root(current_path = USER_CURRENT_DIR):
+    for f in [tmp for tmp in listdir(current_path) if path.isdir(path.join(
+            current_path, tmp))]:
+        if f == APP_GIT_FOLDER:
+            return current_path
+
+    return find_root(os.path.dirname(current_path))
+
 def read_json(filepath):
     try:
         with open(filepath) as data_file:
@@ -78,7 +91,5 @@ def read_json(filepath):
     except ValueError:
         raise ValueError('Invalid json ' + filepath)
 
-def login():
-    username = raw_input("Email: ")
-    password = getpass.getpass()
-    return username, password
+def read_package_json():
+    return read_json(path.join(find_root(), USER_APP_JSON))
