@@ -1,10 +1,9 @@
-import argparse, os, sys
-import importlib
-import imp
+import argparse
 from sys import argv
+
+from coolbee.utils import get_features
+from coolbee.constants import FEATURE_DIR
 from os import path
-from utils.main import get_features
-from utils.constants import FEATURE_DIR
 
 __help__ = "main"
 

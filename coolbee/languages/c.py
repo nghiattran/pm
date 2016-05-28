@@ -1,6 +1,8 @@
-import subprocess, sys, os
+import subprocess
+
 from languages import BaseStrategy
-from utils.constants import *
+from constants import *
+
 
 class C(BaseStrategy):
 

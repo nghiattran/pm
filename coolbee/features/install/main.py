@@ -1,5 +1,7 @@
 import argparse
 
+from coolbee import utils
+
 __help__ = "download"
 
 def main():
@@ -13,5 +15,25 @@ def main():
 
     args = parser.parse_args()
 
+    install()
+
+def install():
+    preprocess()
+
+    process()
+
+    postprocess()
+
+def preprocess():
+
+    json = utils.read_package_json()
+
+def process():
+    pass
+
+def postprocess():
+    pass
+
 if __name__ == '__main__':
     main()
+

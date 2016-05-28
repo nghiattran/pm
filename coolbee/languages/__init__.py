@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from os import path
-from utils.main import is_file_extension
+from utils import is_file_extension
 
 class BaseStrategy(object):
     __metaclass__ = ABCMeta

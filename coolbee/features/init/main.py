@@ -1,11 +1,11 @@
-import argparse, os
-from sys import argv, stderr
-from os import path
-import utils.main as utils
-from utils.constants import *
-from pygit2 import init_repository, Repository, Diff, Signature, Remote
+import argparse
 import json
 import shutil
+from sys import stderr
+import coolbee.utils as utils
+
+from coolbee.constants import *
+from pygit2 import init_repository, Repository
 
 info = {}
 

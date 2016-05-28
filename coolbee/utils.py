@@ -1,11 +1,10 @@
 import getpass
+import importlib
 import json
 
-from os import path,listdir
-import importlib
-from coolbee.utils.constants import *
-from pygit2 import Signature, GIT_OBJ_COMMIT
+from constants import *
 from errors import CleanDirError
+from pygit2 import Signature, GIT_OBJ_COMMIT
 
 tmp_sig = {'name': 'me', 'email': 'me.email.com'}
 

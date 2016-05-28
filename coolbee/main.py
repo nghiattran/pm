@@ -1,8 +1,9 @@
-import os
 from sys import argv
-from utils.main import get_features, get_languages, get_language
+
+import os
+from constants import MAIN_FILE_NAME, FEATURE_DIR
 from languages.python import Python
-from utils.constants import MAIN_FILE_NAME, COOLBEE_PATH, FEATURE_DIR
+from utils import get_features, get_languages, get_language
 
 
 def get_main_file(path):
@@ -39,4 +40,4 @@ if __name__ == '__main__':
             if language_instance.is_language(filename):
                 language_instance.execute_command(args=argv, command=command)
     else:
-        Python().execute_command(args=argv, command="main")
+        Python().execute_command(command="main")

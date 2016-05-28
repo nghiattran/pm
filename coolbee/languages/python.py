@@ -1,6 +1,8 @@
-import subprocess, sys, os
+import subprocess
+
 from languages import BaseStrategy
-from utils.constants import *
+from constants import *
+
 
 class Python(BaseStrategy):
 
@@ -13,8 +15,7 @@ class Python(BaseStrategy):
     def execute(self, file_path, args=[]):
         # Set up environment for subprocess
         current_env = os.environ.copy()
-        current_env['PYTHONPATH'] = ':'.join(sys.path)
-
+        current_env['PYTHONPATH'] = ':'.join([COOLBEE_BASE_PATH])
         full_command = [PYTHON_COMMAND, file_path]
         full_command.extend(args)
 

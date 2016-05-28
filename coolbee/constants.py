@@ -22,12 +22,11 @@ USER_APP_JSON = path.join(USER_CURRENT_DIR, APP_JSON)
 USER_EMAIL = 'email@email.com'
 USER_PASSWORD = 'password'
 
-COOLBEE_PATH = path.dirname(path.dirname(path.realpath(__file__)))
+COOLBEE_PATH = path.dirname(path.realpath(__file__))
 COOLBEE_BASE_PATH = path.dirname(COOLBEE_PATH)
 
 FEATURE_DIR_NAME = 'features'
 FEATURE_DIR = path.join(COOLBEE_PATH, FEATURE_DIR_NAME)
-
 LANGUAGE_DIR_NAME = 'languages'
 LANGUAGE_DIR = path.join(COOLBEE_PATH, LANGUAGE_DIR_NAME)
 PYTHON_COMMAND = 'python2'
