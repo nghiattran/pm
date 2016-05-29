@@ -72,13 +72,24 @@ def login():
     password = getpass.getpass()
     return username, password
 
+# Find the root path of a project: check for .coolbee
 def find_root(current_path = USER_CURRENT_DIR):
     for f in [tmp for tmp in listdir(current_path) if path.isdir(path.join(
             current_path, tmp))]:
         if f == APP_GIT_FOLDER:
-            return current_path
-
+                return current_path
     return find_root(os.path.dirname(current_path))
+
+# Find the root path of a project: check for json file
+def find_root_json(current_path=USER_CURRENT_DIR, target=APP_JSON):
+    # If root is reached, raise error
+    if path.split(current_path)[1] == '':
+        raise IOError('File {0} not found.'.format(target))
+
+    if target in [f for f in listdir(current_path) if path.isfile(path.join(
+            current_path, f))]:
+        return current_path
+    return find_root_json(os.path.dirname(current_path), target=target)
 
 def read_json(filepath):
     try:
@@ -90,8 +101,8 @@ def read_json(filepath):
         raise ValueError('Invalid json ' + filepath)
 
 # Read package json in the root project directory
-def read_package_json():
-    return read_json(path.join(find_root(), USER_APP_JSON))
+def read_package_json(filename=APP_JSON):
+    return read_json(path.join(find_root_json(target=filename), filename))
 
 # Veryfy is the package is initialized correctly
 def verify_package():
@@ -140,3 +151,24 @@ def get_versions_cached(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
     versions = get_commits(repo=repo, target=target, order=order)
 
     return versions
+
+# Get all engines
+def get_engines():
+    engines = []
+    for file in listdir(ENGINE_DIR):
+        if path.isfile(path.join(ENGINE_DIR, file)) \
+                and file != '__init__.py' \
+                and not is_file_extension(file, extensions = IGNORED_EXTENSIONS):
+            name, extesion = path.splitext(file)
+            engines.append(name)
+    return engines
+
+# Get a engine object
+# TODO some how "path= '{0}.{1}'.format(ENGINE_DIR_NAME, engine)" dowsn't
+# work as in get_language
+def get_engine(engine='default'):
+    # path= '{0}.{1}'.format(ENGINE_DIR_NAME, engine)
+    path= '{0}.{1}.{2}'.format('coolbee',ENGINE_DIR_NAME, engine)
+    module = importlib.import_module(path)
+    return getattr(module, engine.capitalize())
+
