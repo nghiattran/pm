@@ -38,13 +38,15 @@ def is_file_extension(filename, extensions = IGNORED_EXTENSIONS):
     return False
 
 
-def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False):
+def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False,
+           pathset=[]):
+    print repo
     if repo.diff().patch == None and not init:
         raise CleanDirError('No changes detected')
 
     index = repo.index
     # Add all changes to git
-    index.add_all()
+    index.add_all(pathspecs=pathset)
     index.write()
 
     tree = index.write_tree()
@@ -76,7 +78,7 @@ def login():
 def find_root(current_path = USER_CURRENT_DIR):
     for f in [tmp for tmp in listdir(current_path) if path.isdir(path.join(
             current_path, tmp))]:
-        if f == APP_GIT_FOLDER:
+        if f == APP_GIT_FOLDER_NAME:
                 return current_path
     return find_root(os.path.dirname(current_path))
 
@@ -109,7 +111,7 @@ def verify_package():
     # check if the directory is init yet
     # if yes, go on
     # if no, exit
-    if not path.isdir(path.join(find_root(), APP_GIT_FOLDER)):
+    if not path.isdir(path.join(find_root(), APP_GIT_FOLDER_NAME)):
         stderr.write('Error: This is not a {0} package.\n'.format(APP_NAME))
         exit(1)
 

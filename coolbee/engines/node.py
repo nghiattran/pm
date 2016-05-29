@@ -1,3 +1,4 @@
+import shutil
 import tarfile
 import urllib2
 
@@ -9,13 +10,14 @@ import os
 import requests
 from clint.textui import progress
 from coolbee.constants import APP_CACHE_DIR, APP_REMOTE, APP_ARCHIVE_DIR, \
-    USER_PACKAGE_FOLDER
+    USER_PACKAGE_FOLDER, USER_CURRENT_DIR, APP_GIT_FOLDER_NAME
+from coolbee.languages.python import Python
 from coolbee.semver_adapter import max_satisfy
 from os import path
 
 from coolbee import utils
 from coolbee.engines import BaseEngine
-from pygit2 import Repository, clone_repository
+from pygit2 import Repository, clone_repository, init_repository
 
 
 class Node(BaseEngine):
@@ -67,55 +69,71 @@ class Node(BaseEngine):
         pass
 
     def install_process_cached(self, package_json, package_list):
+        tmp_user_path = ''
         for pkgname, versions in package_list:
+            tmp_package_path = path.join(USER_CURRENT_DIR, pkgname)
+            try:
+                os.makedirs(tmp_package_path)
+            except OSError:
+                pass
+
+            # init repo
+            Python().execute_command(command='init', args=['-p', pkgname, '-i'])
+            repo = Repository(path.join(tmp_package_path, APP_GIT_FOLDER_NAME))
+            
+            print path.join(tmp_package_path, APP_GIT_FOLDER_NAME)
+            self.clean(tmp_package_path)
+
             for version in versions:
                 # download
                 url = self.get_download_url(name=pkgname, version=version)
-                filename = url.split('/')[-1]
-                dest = path.join(APP_ARCHIVE_DIR, self.engine_name,filename)
+                # filename = url.split('/')[-1]
+                filename = '{0}@{1}.tgz'.format(pkgname, version)
+                # dest = path.join(APP_ARCHIVE_DIR, self.engine_name,filename)
+                dest= path.join(USER_CURRENT_DIR,filename)
 
-                # Check package is already installed
+                # Check package archived is downloaded
                 if (path.isfile(dest)):
                     print 'Locate {0}'.format(filename)
                 else:
                     print 'Download {0}'.format(filename)
                     self.download(url=url, dest=dest)
 
+                # Extract file
+                name, extension = path.splitext(filename)
+                path_to_package = path.join(USER_CURRENT_DIR, name)
+                tar = tarfile.open(dest)
+                tar.extractall(path=path_to_package)
+                tar.close()
 
+                tmp_path = path.join(path.join(path_to_package, 'package'))
+                files = os.listdir(tmp_path)
+                for f in os.listdir(tmp_path):
+                    shutil.move(path.join(tmp_path, f), tmp_package_path)
+
+
+                # break
+                utils.commit(repo, pathset=[tmp_package_path], message=version)
+                # try:
+                #     utils.commit(repo, pathset=[tmp_package_path])
+                # except Exception as e:
+                #     print e.message
+
+                self.clean(tmp_package_path)
+                break
+
+    def clean(self, path, ignores=[APP_GIT_FOLDER_NAME]):
+
+        for f in os.listdir(path):
+            filepath = os.path.join(path, f)
+            if os.path.isdir(filepath) and f in ignores:
+                continue
+            else:
+                os.remove(filepath)
 
     # Unused for now
     def install_package_cached(self, pkg_name, expression):
-        package_cache_path = path.join(APP_CACHE_DIR, pkg_name)
-
-        # Check if the package is cached
-        try:
-            repo = Repository(package_cache_path)
-
-            # TODO: check lastest version
-            # If lastest is cached, advance
-            # If no, prompt user
-        except KeyError as e:
-            repo = clone_repository(APP_REMOTE['url'], package_cache_path)
-
-        # Get suitable version for the expression
-        versions = utils.get_versions_cached(repo)
-        version = max_satisfy(versions=versions.keys(), expression='')
-
-        package_archive_name = '{0}-{1}.tar'.format(pkg_name, version)
-        package_archive_path = path.join(APP_ARCHIVE_DIR, package_archive_name)
-
-        # Create archive file
-        # If the file already exists, move forward
-        if path.isfile(package_archive_path):
-            with tarfile.open(package_archive_path, 'w') as archive:
-                repo.write_archive(archive=archive, treeish=versions[version].tree_id)
-
-        # TODO: use strategy
-        # Extract archive to package dir
-        path_to_package = path.join(USER_PACKAGE_FOLDER, 'user', pkg_name)
-        tar = tarfile.open(package_archive_path)
-        tar.extractall(path=path_to_package)
-        tar.close()
+        pass
 
     def download(self, url = None, dest = None):
         if url is None:

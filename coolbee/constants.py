@@ -2,7 +2,7 @@ import os
 from os import path, listdir
 
 APP_NAME = 'git'
-APP_GIT_FOLDER = '.' + APP_NAME
+APP_GIT_FOLDER_NAME = '.' + APP_NAME
 APP_JSON = APP_NAME + '.json'
 APP_REMOTE = {
     'name': 'origin',
@@ -22,7 +22,7 @@ MAIN_FILE_NAME = 'main'
 MAIN_FILE_PYTHON_NAME = MAIN_FILE_NAME + '.py'
 
 USER_CURRENT_DIR = os.getcwd()
-USER_GIT_FOLDER = path.join(USER_CURRENT_DIR, APP_GIT_FOLDER)
+USER_GIT_FOLDER = path.join(USER_CURRENT_DIR, APP_GIT_FOLDER_NAME)
 USER_APP_JSON = path.join(USER_CURRENT_DIR, APP_JSON)
 USER_PACKAGE_FOLDER = path.join(USER_CURRENT_DIR, APP_LOCAL_DIR_NAME)
 USER = {

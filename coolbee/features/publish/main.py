@@ -44,7 +44,7 @@ def preprocess():
     return json
 
 def process(package_info):
-    root = path.join(utils.find_root(), APP_GIT_FOLDER)
+    root = path.join(utils.find_root(), APP_GIT_FOLDER_NAME)
     try:
         repo = Repository(root)
     except:
