@@ -80,7 +80,7 @@ class Node(BaseEngine):
             # init repo
             Python().execute_command(command='init', args=['-p', pkgname, '-i'])
             repo = Repository(path.join(tmp_package_path, APP_GIT_FOLDER_NAME))
-            
+
             print path.join(tmp_package_path, APP_GIT_FOLDER_NAME)
             self.clean(tmp_package_path)
 
