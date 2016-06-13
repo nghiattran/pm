@@ -3,3 +3,4 @@ modulars
 bower_components
 .idea
 *.pyc
+env
