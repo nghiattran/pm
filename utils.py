@@ -2,15 +2,15 @@ import getpass
 import importlib
 import json
 from sys import stderr
-
+import semver_adapter
 from constants import *
 from errors import CleanDirError
 from pygit2 import Signature, GIT_OBJ_COMMIT, GIT_SORT_TOPOLOGICAL
 
 # Get all main commands
 def get_features():
-    return [f for f in listdir(FEATURE_DIR) if not path.isfile(path.join(
-        FEATURE_DIR, f))]
+    return [f for f in listdir(COMMAND_DIR) if not path.isfile(path.join(
+        COMMAND_DIR, f))]
 
 # Get all supported languages
 def get_languages():
@@ -40,13 +40,18 @@ def is_file_extension(filename, extensions = IGNORED_EXTENSIONS):
 
 def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False,
            pathset=[]):
-    print repo
+    if not init:
+        diff = repo.diff('HEAD')
+        files = [patch.delta.new_file.path for patch in diff]
+        print files
+        print repo
+
     if repo.diff().patch == None and not init:
         raise CleanDirError('No changes detected')
 
     index = repo.index
     # Add all changes to git
-    index.add_all(pathspecs=pathset)
+    index.add_all()
     index.write()
 
     tree = index.write_tree()
@@ -73,6 +78,21 @@ def login():
     username = raw_input("Email: ")
     password = getpass.getpass()
     return username, password
+
+def ask_package_info():
+    json = {}
+    while "name" not in json or json['name'] == None:
+        json['name'] = raw_input("Package name: ")
+
+    while "version" not in json or json['version'] == None:
+        try:
+            json['version'] = raw_input("Version: ")
+            semver_adapter.parse(json['version'])
+        except Exception as e:
+            json['version'] = None
+            print 'A Sematic Version number is required.'
+
+    return json
 
 # Find the root path of a project: check for .coolbee
 def find_root(current_path = USER_CURRENT_DIR):
@@ -170,7 +190,7 @@ def get_engines():
 # work as in get_language
 def get_engine(engine='default'):
     # path= '{0}.{1}'.format(ENGINE_DIR_NAME, engine)
-    path= '{0}.{1}.{2}'.format('coolbee',ENGINE_DIR_NAME, engine)
+    path= '{0}.{1}'.format(ENGINE_DIR_NAME, engine)
     module = importlib.import_module(path)
     return getattr(module, engine.capitalize())
 

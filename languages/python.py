@@ -27,7 +27,7 @@ class Python(BaseStrategy):
 
         # Get absolute path to target file
         file_path = os.path.join(COOLBEE_PATH,
-                               FEATURE_DIR, command,
+                               COMMAND_DIR, command,
                                filename)
 
         self.execute(args=args, file_path=file_path)

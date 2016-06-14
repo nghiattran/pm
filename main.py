@@ -1,7 +1,9 @@
+#!/usr/bin/python3
+
 from sys import argv
 
 import os
-from constants import MAIN_FILE_NAME, FEATURE_DIR
+from constants import MAIN_FILE_NAME, COMMAND_DIR
 from languages.python import Python
 from utils import get_features, get_languages, get_language
 
@@ -30,7 +32,7 @@ if __name__ == '__main__':
         argv.pop(0)
 
         # Main file for a command
-        filename = get_main_file(os.path.join(FEATURE_DIR, command))
+        filename = get_main_file(os.path.join(COMMAND_DIR, command))
 
         languages = get_languages()
 

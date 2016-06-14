@@ -13,6 +13,7 @@ APP_GIT_REF = 'refs/heads/{0}'.format(APP_GIT_BRANCH)
 APP_LOCAL_DIR_NAME = '{0}_packages'.format(APP_NAME)
 APP_GlObAL_DIR_NAME = '.{0}'.format(APP_LOCAL_DIR_NAME)
 APP_GlObAL_DIR = path.join(os.environ['HOME'], APP_GlObAL_DIR_NAME)
+
 APP_CACHE_DIR_NAME = 'cache'
 APP_CACHE_DIR = path.join(APP_GlObAL_DIR, APP_CACHE_DIR_NAME)
 APP_ARCHIVE_DIR_NAME = 'archive'
@@ -34,8 +35,8 @@ USER = {
 COOLBEE_PATH = path.dirname(path.realpath(__file__))
 COOLBEE_BASE_PATH = path.dirname(COOLBEE_PATH)
 
-FEATURE_DIR_NAME = 'features'
-FEATURE_DIR = path.join(COOLBEE_PATH, FEATURE_DIR_NAME)
+COMMAND_DIR_NAME = 'commands'
+COMMAND_DIR = path.join(COOLBEE_PATH, COMMAND_DIR_NAME)
 LANGUAGE_DIR_NAME = 'languages'
 LANGUAGE_DIR = path.join(COOLBEE_PATH, LANGUAGE_DIR_NAME)
 ENGINE_DIR_NAME = 'engines'
