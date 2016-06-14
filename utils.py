@@ -5,7 +5,7 @@ from sys import stderr
 import semver_adapter
 from constants import *
 from errors import CleanDirError
-from pygit2 import Signature, GIT_OBJ_COMMIT, GIT_SORT_TOPOLOGICAL
+from pygit2 import Signature, GIT_OBJ_COMMIT, GIT_SORT_TOPOLOGICAL, GIT_STATUS_CURRENT
 
 # Get all main commands
 def get_features():
@@ -40,13 +40,9 @@ def is_file_extension(filename, extensions = IGNORED_EXTENSIONS):
 
 def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False,
            pathset=[]):
-    if not init:
-        diff = repo.diff('HEAD')
-        files = [patch.delta.new_file.path for patch in diff]
-        print files
-        print repo
+    print repo.status()
 
-    if repo.diff().patch == None and not init:
+    if repo.status() == {} and not init:
         raise CleanDirError('No changes detected')
 
     index = repo.index
@@ -68,16 +64,19 @@ def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False,
         [] if len(repo.listall_branches()) == 0 else [branch.target]
     )
 
+
 def create_tag(repo, name, branch=APP_GIT_BRANCH):
     branch = repo.lookup_branch(branch)
     author = Signature(USER['name'], USER['email'])
     target = branch.target
     repo.create_tag(name, target, GIT_OBJ_COMMIT, author, name)
 
+
 def login():
     username = raw_input("Email: ")
     password = getpass.getpass()
     return username, password
+
 
 def ask_package_info():
     json = {}
@@ -94,6 +93,7 @@ def ask_package_info():
 
     return json
 
+
 # Find the root path of a project: check for .coolbee
 def find_root(current_path = USER_CURRENT_DIR):
     for f in [tmp for tmp in listdir(current_path) if path.isdir(path.join(
@@ -101,6 +101,7 @@ def find_root(current_path = USER_CURRENT_DIR):
         if f == APP_GIT_FOLDER_NAME:
                 return current_path
     return find_root(os.path.dirname(current_path))
+
 
 # Find the root path of a project: check for json file
 def find_root_json(current_path=USER_CURRENT_DIR, target=APP_JSON):
@@ -122,9 +123,11 @@ def read_json(filepath):
     except ValueError:
         raise ValueError('Invalid json ' + filepath)
 
+
 # Read package json in the root project directory
 def read_package_json(filename=APP_JSON):
     return read_json(path.join(find_root_json(target=filename), filename))
+
 
 # Veryfy is the package is initialized correctly
 def verify_package():
@@ -142,6 +145,7 @@ def verify_package():
         stderr.write('Error: Missing {0} file.\n'.format(APP_JSON))
         exit(1)
 
+
 def get_commits(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
     if target is None:
         target = repo.head.target
@@ -154,6 +158,7 @@ def get_commits(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
         dict[commit.message] = commit
     return dict
 
+
 def get_commit_list(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
     if target is None:
         target = repo.head.target
@@ -165,6 +170,7 @@ def get_commit_list(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
 
     return list
 
+
 # Get all version of a cached package
 def get_versions_cached(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
     if target is None:
@@ -173,6 +179,7 @@ def get_versions_cached(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
     versions = get_commits(repo=repo, target=target, order=order)
 
     return versions
+
 
 # Get all engines
 def get_engines():
@@ -184,6 +191,7 @@ def get_engines():
             name, extesion = path.splitext(file)
             engines.append(name)
     return engines
+
 
 # Get a engine object
 # TODO some how "path= '{0}.{1}'.format(ENGINE_DIR_NAME, engine)" dowsn't

@@ -3,5 +3,5 @@ modulars
 bower_components
 .idea
 *.pyc
-env
+env*
 test_repo

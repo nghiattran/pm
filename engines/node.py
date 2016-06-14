@@ -74,7 +74,6 @@ class Node(BaseEngine):
         pass
 
     def install_process_cached(self, package_json, dependencies):
-        local_packages_path = path.join(path.join(USER_CURRENT_DIR, self._package_folder))
         tmp_user_path = ''
         for pkgname, versions in dependencies:
             package_cache_path = path.join(APP_CACHE_DIR, pkgname)
@@ -89,47 +88,55 @@ class Node(BaseEngine):
                 Python().execute_command(command='init', args=['-p', package_cache_path, '-i'])
             repo = Repository(git_package_cache_path)
 
+            # TODO: Should check cached versions
             self.clean(package_cache_path)
 
-            for version in versions:
-                # download
-                url = self.get_download_url(name=pkgname, version=version)
-                # filename = url.split('/')[-1]
-                filename = '{0}@{1}.{2}'.format(pkgname, version, self._file_extension)
-                # dest = path.join(APP_ARCHIVE_DIR, self.engine_name,filename)
-                dest= path.join(APP_ARCHIVE_DIR, pkgname, version + ".tgz")
+            # clean up all version but the last one
+            for version in versions[:-1]:
+                self.install_package(repo, pkgname, version, package_cache_path)
+                self.clean(package_cache_path)
 
-                # Check package archived is downloaded
-                if (path.isfile(dest)):
-                    print 'Locate {0}'.format(filename)
-                else:
-                    print 'Download {0}'.format(filename)
-                    self.download(url=url, dest=dest)
+            self.install_package(repo, pkgname, versions[-1], package_cache_path)
 
-                # Extract file
-                path_to_package = path.join(local_packages_path, pkgname)
-                tar = tarfile.open(dest)
-                tar.extractall(path=path_to_package)
-                tar.close()
+    def install_package(self, repo, pkgname, version, package_cache_path):
+        local_packages_path = path.join(path.join(USER_CURRENT_DIR, self._package_folder))
 
-                # tmp_package_path = path.join(path_to_package, self._tmp_package_folder)
-                # for f in os.listdir(tmp_package_path):
-                #     shutil.move(path.join(tmp_package_path, f), path_to_package)
+        # download
+        url = self.get_download_url(name=pkgname, version=version)
+        # filename = url.split('/')[-1]
+        filename = '{0}@{1}.{2}'.format(pkgname, version, self._file_extension)
+        # dest = path.join(APP_ARCHIVE_DIR, self.engine_name,filename)
+        dest = path.join(APP_ARCHIVE_DIR, pkgname, version + ".tgz")
 
-                tmp_package_path = path.join(path_to_package, self._tmp_package_folder)
-                for f in os.listdir(tmp_package_path):
-                    shutil.move(path.join(tmp_package_path, f), package_cache_path)
+        # Check package archived is downloaded
+        if (path.isfile(dest)):
+            print 'Locate {0}'.format(filename)
+        else:
+            print 'Download {0}'.format(filename)
+            self.download(url=url, dest=dest)
 
-                # utils.commit(repo, pathset=[tmp_package_path], message=version)
-                # break
-                try:
-                    utils.commit(repo, pathset=[tmp_package_path], message=version)
-                except Exception as e:
-                    print e
-                    print e.message
+        # Extract file
+        path_to_package = path.join(local_packages_path, pkgname)
+        tar = tarfile.open(dest)
+        tar.extractall(path=path_to_package)
+        tar.close()
 
-                # self.clean(package_cache_path)
-                break
+        # tmp_package_path = path.join(path_to_package, self._tmp_package_folder)
+        # for f in os.listdir(tmp_package_path):
+        #     shutil.move(path.join(tmp_package_path, f), path_to_package)
+
+        tmp_package_path = path.join(path_to_package, self._tmp_package_folder)
+        for f in os.listdir(tmp_package_path):
+            shutil.move(path.join(tmp_package_path, f), path.join(package_cache_path, f))
+
+        # utils.commit(repo, pathset=[tmp_package_path], message=version)
+        # break
+        try:
+            utils.commit(repo, pathset=[tmp_package_path], message=version)
+        except Exception as e:
+            print e
+            print e.message
+
 
     def clean(self, path, ignores=[APP_GIT_FOLDER_NAME]):
         for f in os.listdir(path):
