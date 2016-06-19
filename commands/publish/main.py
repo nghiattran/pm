@@ -66,13 +66,14 @@ def process(package_info):
     #     repo.write_archive(archive=archive, treeish=repo.head.target)
 
     # Login to get credentials
-    username, password = utils.login()
+    # username, password = utils.login()
+    username, password = "nghiattran3@gmail.com", "Noname1184"
 
     # Git push using username and password
     remote = repo.remotes[APP_REMOTE['name']]
     credentials = UserPass(username, password)
     callbacks = RemoteCallbacks(credentials=credentials)
-    # remote.push([APP_GIT_REF], callbacks)
+    remote.push([APP_GIT_REF], callbacks)
 
     # Create a tag
     utils.create_tag(repo, package_info['version'])

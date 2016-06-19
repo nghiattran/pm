@@ -1,6 +1,8 @@
 import os
 from os import path, listdir
 
+APP_IP=""
+APP_PACKAGE_GIT_NAME = "nghia@192.168.1.51:clones/first"
 APP_NAME = 'git'
 APP_GIT_FOLDER_NAME = '.' + APP_NAME
 APP_JSON = APP_NAME + '.json'

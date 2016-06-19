@@ -3,7 +3,10 @@
 import argparse
 import json
 import shutil
-from sys import stderr
+from sys import stderr, argv
+
+import sys
+
 import utils as utils
 import os
 from constants import USER_CURRENT_DIR, APP_GIT_FOLDER_NAME, APP_REMOTE, \
@@ -22,8 +25,7 @@ def main():
     parser.add_argument('--ignore', '-i', help='Path to package', dest='ignore',
                       action='store_true')
 
-    args = parser.parse_args()
-
+    args = parser.parse_args(argv)
     init_project(args)
 
 
@@ -97,6 +99,3 @@ def process(args):
         remote = repo.remotes.create(APP_REMOTE['name'], APP_REMOTE['url'])
         repo.remotes.set_push_url(APP_REMOTE['name'], remote.url)
 
-
-if __name__ == '__main__':
-    main()
