@@ -1,8 +1,9 @@
+import importlib
 import subprocess
 
 from languages import BaseStrategy
 from constants import *
-
+from commands import *
 
 class Python(BaseStrategy):
 
@@ -20,14 +21,13 @@ class Python(BaseStrategy):
         full_command.extend(args)
 
         # Execute command
-        subprocess.Popen(full_command, env=current_env).communicate()
+        # subprocess.Popen(full_command, env=current_env).communicate()
+        path = '{0}.{1}.{2}'.format('commands', file_path, 'main')
+        module = importlib.import_module(path)
+        getattr(module, 'main')()
+
 
     def execute_command(self, command, args=[]):
-        filename = "{0}.{1}".format(MAIN_FILE_NAME, self.__python_execute_extension)
-
-        # Get absolute path to target file
-        file_path = os.path.join(COOLBEE_PATH,
-                               COMMAND_DIR, command,
-                               filename)
-
-        self.execute(args=args, file_path=file_path)
+        path = '{0}.{1}.{2}'.format('commands', command, 'main')
+        module = importlib.import_module(path)
+        getattr(module, 'main')()

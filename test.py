@@ -47,6 +47,6 @@
 #
 # # print([p.old_file_path for p in diff])
 
-from coolbee.utils import find_root
+from utils import find_root
 
 print find_root()

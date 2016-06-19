@@ -1,6 +1,8 @@
 import argparse
 from sys import stderr
 
+import sys
+
 import utils as utils
 import semver_adapter
 from constants import *
@@ -39,7 +41,7 @@ def preprocess():
     except ValueError:
         print 'Error: "{0}" is an invalid version, checkout ' \
               'http://semver.org/ for more detail'.format(json['version'])
-        exit(1)
+        sys.exit(1)
 
     return json
 
@@ -49,13 +51,13 @@ def process(package_info):
         repo = Repository(root)
     except:
         stderr.write('corrupt')
-        exit(1)
+        sys.exit(1)
 
     try:
         utils.commit(repo, package_info['version'])
     except CleanDirError:
         stderr.write('Nothing to publish, directory clean.\n')
-        exit(1)
+        sys.exit(1)
 
     # name = '{0}@{1}-{2}'.format(package_info['author']['name'].lower(),
     #                            package_info['name'].lower(),

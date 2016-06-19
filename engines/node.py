@@ -18,10 +18,13 @@ import utils
 from engines import BaseEngine
 from pygit2 import Repository, clone_repository, init_repository
 
+content_length = 0
+package_url = 'http://registry.npmjs.org'
+package_list = {}
 
 class Node(BaseEngine):
     engine_name = 'node'
-    __package_url = 'http://registry.npmjs.org'
+    _package_url = 'http://registry.npmjs.org'
     __json_file_name = 'git.json'
     _file_extension = "tgz"
     _package_folder = 'node_modules'
@@ -32,13 +35,13 @@ class Node(BaseEngine):
 
 
     def get_download_url(self, name, version):
-        return '{0}/{1}/-/{1}-{2}.tgz'.format(self.__package_url, name, version)
+        return '{0}/{1}/-/{1}-{2}.tgz'.format(self._package_url, name, version)
 
     # Installation
     def install(self, args = []):
         package_json, dependencies = self.install_preprocess()
 
-        self.install_process(package_json, dependencies)
+        # self.install_process(package_json, dependencies, args)
 
         # self.install_postprocess()
 
@@ -49,32 +52,35 @@ class Node(BaseEngine):
         except IOError as e:
             print e.message
             print 'Error: This is not a {0} package.'.format(self.engine_name)
-            exit(1)
+            sys.exit(1)
 
         unsolved_list = package_json['dependencies'].items()
         dependencies = []
 
+        for package in unsolved_list:
+            print package[0]
+            Package(package[0])
+
         # Get infomation of all dependencies
-        print "Gathering dependencies infomation"
-        while len(unsolved_list) != 0:
-            name, expression = unsolved_list.pop()
-            r = requests.get('{0}/{1}'.format(self.__package_url, name))
-            versions_list = r.json()['versions'].keys()
-            dependencies.append((name, versions_list))
-        print "Done gathering dependencies infomation"
+        # print "Gathering dependencies infomation"
+        # while len(unsolved_list) != 0:
+        #     name, expression = unsolved_list.pop()
+        #     r = requests.get('{0}/{1}'.format(self._package_url, name))
+        #     versions_list = r.json()['versions'].keys()
+        #     dependencies.append((name, versions_list))
+        # print "Done gathering dependencies infomation"
 
         return package_json, dependencies
 
 
-    def install_process(self, package_json, package_list):
-        self.install_process_cached(package_json, package_list)
+    def install_process(self, package_json, dependencies, args):
+        self.install_process_cached(package_json, dependencies, args)
 
 
     def install_postprocess(self):
         pass
 
-    def install_process_cached(self, package_json, dependencies):
-        tmp_user_path = ''
+    def install_process_cached(self, package_json, dependencies, args):
         for pkgname, versions in dependencies:
             package_cache_path = path.join(APP_CACHE_DIR, pkgname)
             git_package_cache_path = path.join(package_cache_path, APP_GIT_FOLDER_NAME)
@@ -88,27 +94,40 @@ class Node(BaseEngine):
                 Python().execute_command(command='init', args=['-p', package_cache_path, '-i'])
             repo = Repository(git_package_cache_path)
 
-            # TODO: Should check cached versions
-            self.clean(package_cache_path)
+            cached_versions = utils.get_commit_list(repo)
 
             # clean up all version but the last one
-            for version in versions[:-1]:
-                self.install_package(repo, pkgname, version, package_cache_path)
-                self.clean(package_cache_path)
-
-            self.install_package(repo, pkgname, versions[-1], package_cache_path)
+            for version in versions:
+                if version not in cached_versions:
+                    self.clean(package_cache_path)
+                    self.install_package_cached(repo, pkgname, version, package_cache_path)
 
     def install_package(self, repo, pkgname, version, package_cache_path):
+        pass
+
+
+    def clean(self, path, ignores=[APP_GIT_FOLDER_NAME]):
+        for f in os.listdir(path):
+            filepath = os.path.join(path, f)
+            if os.path.isdir(filepath) and f in ignores:
+                continue
+            elif not os.path.isdir(filepath):
+                os.remove(filepath)
+            else:
+                shutil.rmtree(filepath)
+
+    # Unused for now
+    def install_package_cached(self, repo, pkgname, version, package_cache_path):
         local_packages_path = path.join(path.join(USER_CURRENT_DIR, self._package_folder))
 
         # download
         url = self.get_download_url(name=pkgname, version=version)
-        # filename = url.split('/')[-1]
         filename = '{0}@{1}.{2}'.format(pkgname, version, self._file_extension)
-        # dest = path.join(APP_ARCHIVE_DIR, self.engine_name,filename)
         dest = path.join(APP_ARCHIVE_DIR, pkgname, version + ".tgz")
 
         # Check package archived is downloaded
+        # if no download
+        # if yes, skip downloading
         if (path.isfile(dest)):
             print 'Locate {0}'.format(filename)
         else:
@@ -129,28 +148,10 @@ class Node(BaseEngine):
         for f in os.listdir(tmp_package_path):
             shutil.move(path.join(tmp_package_path, f), path.join(package_cache_path, f))
 
-        # utils.commit(repo, pathset=[tmp_package_path], message=version)
-        # break
         try:
-            utils.commit(repo, pathset=[tmp_package_path], message=version)
+            utils.commit(repo, message=version)
         except Exception as e:
             print e
-            print e.message
-
-
-    def clean(self, path, ignores=[APP_GIT_FOLDER_NAME]):
-        for f in os.listdir(path):
-            filepath = os.path.join(path, f)
-            if os.path.isdir(filepath) and f in ignores:
-                continue
-            elif not os.path.isdir(filepath):
-                os.remove(filepath)
-            else:
-                shutil.rmtree(filepath)
-
-    # Unused for now
-    def install_package_cached(self, pkg_name, expression):
-        pass
 
     def download(self, url = None, dest = None):
         if url is None:
@@ -192,3 +193,44 @@ class Node(BaseEngine):
 
     def publish(self):
         pass
+
+
+class Package(object):
+    _package_url = Node._package_url
+
+    def __init__(self, package_name):
+        print package_name
+        self.package_name = package_name
+
+        r = requests.get('{0}/{1}'.format(self._package_url, package_name))
+        self.package_json = r.json()
+        self.versions = self.package_json['versions'].keys()
+
+        package_list[self.package_name] = self
+
+        for version in self.versions:
+            PackageVersion(self.package_name, version, self.package_json['versions'][version])
+
+class PackageVersion(object):
+    content_length = 0
+
+    def __init__(self, package_name, version, package_json):
+        self.package_name = package_name
+        self.version = version
+        print self.package_name, self.version
+
+        r = requests.head(self.get_download_url())
+
+        PackageVersion.content_length += int (r.headers['Content-Length'])
+        print PackageVersion.content_length
+
+        if 'dependencies' in package_json:
+            self.dependencies = package_json['dependencies']
+
+            for package_name in self.dependencies:
+                if package_name not in package_list:
+                    Package(package_name=package_name)
+
+
+    def get_download_url(self):
+        return '{0}/{1}/-/{1}-{2}.tgz'.format(package_url, self.package_name, self.version)

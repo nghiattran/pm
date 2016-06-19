@@ -1,35 +1,27 @@
 import getpass
 import importlib
-import json
+import json, glob
 from sys import stderr
+
+import sys
+
 import semver_adapter
 from constants import *
 from errors import CleanDirError
+import imp
 from pygit2 import Signature, GIT_OBJ_COMMIT, GIT_SORT_TOPOLOGICAL, GIT_STATUS_CURRENT
 
-# Get all main commands
-def get_features():
-    return [f for f in listdir(COMMAND_DIR) if not path.isfile(path.join(
-        COMMAND_DIR, f))]
-
-# Get all supported languages
-def get_languages():
-    strategies = []
-    for file in listdir(LANGUAGE_DIR):
-        if path.isfile(path.join(LANGUAGE_DIR, file)) \
-                and file != '__init__.py' \
-                and not is_file_extension(file, extensions = IGNORED_EXTENSIONS):
-            name, extesion = path.splitext(file)
-            strategies.append(name)
-    return strategies
+MODULE_EXTENSIONS = ('.py', '.pyc', '.pyo')
 
 
-# Get a language object
-def get_language(language='python'):
-    path= '{0}.{1}'.format(LANGUAGE_DIR_NAME, language)
-    module = importlib.import_module(path)
-    return getattr(module, language.capitalize())
+def get_commands():
+    """
+    Get all main commands of the app. This looks into COMMAND_DIR, every folder in it is a command
 
+    :return: list of all commands
+    """
+    import commands, pkgutil
+    return [modname for importer, modname, ispkg in pkgutil.iter_modules(commands.__path__) if ispkg]
 
 def is_file_extension(filename, extensions = IGNORED_EXTENSIONS):
     name, extesion = path.splitext(filename)
@@ -38,9 +30,19 @@ def is_file_extension(filename, extensions = IGNORED_EXTENSIONS):
     return False
 
 
-def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False,
-           pathset=[]):
-    print repo.status()
+def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False):
+    """
+    Create a commit for all changes in a given repo
+
+    :param repo: The repo to be committed
+    :param message: Message for the commit
+    :param branch: The branch to commit, if not specified, master branch will be used
+    :param init: indicates whether this commit is a initial commit. This is use to initialize git repo since git
+    requires a commit to use branch
+    :return: None
+    """
+
+    # print repo.status()
 
     if repo.status() == {} and not init:
         raise CleanDirError('No changes detected')
@@ -73,12 +75,22 @@ def create_tag(repo, name, branch=APP_GIT_BRANCH):
 
 
 def login():
+    """
+    Ask username and password
+
+    :return:
+    """
     username = raw_input("Email: ")
     password = getpass.getpass()
     return username, password
 
 
 def ask_package_info():
+    """
+    Ask user for package information to be stored in .json file
+
+    :return:
+    """
     json = {}
     while "name" not in json or json['name'] == None:
         json['name'] = raw_input("Package name: ")
@@ -136,14 +148,14 @@ def verify_package():
     # if no, exit
     if not path.isdir(path.join(find_root(), APP_GIT_FOLDER_NAME)):
         stderr.write('Error: This is not a {0} package.\n'.format(APP_NAME))
-        exit(1)
+        sys.exit(1)
 
     # check if APP_JSON exists
     # if yes, go on
     # if no, exit
     if not path.isfile(path.join(find_root(), APP_JSON)):
         stderr.write('Error: Missing {0} file.\n'.format(APP_JSON))
-        exit(1)
+        sys.exit(1)
 
 
 def get_commits(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
@@ -194,10 +206,7 @@ def get_engines():
 
 
 # Get a engine object
-# TODO some how "path= '{0}.{1}'.format(ENGINE_DIR_NAME, engine)" dowsn't
-# work as in get_language
 def get_engine(engine='default'):
-    # path= '{0}.{1}'.format(ENGINE_DIR_NAME, engine)
     path= '{0}.{1}'.format(ENGINE_DIR_NAME, engine)
     module = importlib.import_module(path)
     return getattr(module, engine.capitalize())

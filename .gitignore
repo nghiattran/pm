@@ -5,3 +5,4 @@ bower_components
 *.pyc
 env*
 test_repo
+dist

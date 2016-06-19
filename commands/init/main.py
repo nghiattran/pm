@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import argparse
 import json
 import shutil
@@ -46,7 +48,7 @@ def preprocess(args):
     # if no, go on
     if path.isdir(path.join(args.path, APP_GIT_FOLDER_NAME)):
         stderr.write('Error: Package has been initialized\n')
-        exit(1)
+        sys.exit(1)
 
 
 def postprocess(args):
