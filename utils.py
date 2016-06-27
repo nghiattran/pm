@@ -42,8 +42,6 @@ def commit(repo, message='init package', branch=APP_GIT_BRANCH, init=False):
     :return: None
     """
 
-    # print repo.status()
-
     if repo.status() == {} and not init:
         raise CleanDirError('No changes detected')
 
@@ -146,16 +144,17 @@ def verify_package():
     # check if the directory is init yet
     # if yes, go on
     # if no, exit
-    if not path.isdir(path.join(find_root(), APP_GIT_FOLDER_NAME)):
-        stderr.write('Error: This is not a {0} package.\n'.format(APP_NAME))
-        sys.exit(1)
+    # if not path.isdir(path.join(find_root(), APP_GIT_FOLDER_NAME)):
+    #     stderr.write('Error: This is not a {0} package.\n'.format(APP_NAME))
+    #     sys.exit(1)
 
     # check if APP_JSON exists
     # if yes, go on
     # if no, exit
-    if not path.isfile(path.join(find_root(), APP_JSON)):
-        stderr.write('Error: Missing {0} file.\n'.format(APP_JSON))
-        sys.exit(1)
+    # if not path.isfile(path.join(find_root(), APP_JSON)):
+    #     stderr.write('Error: Missing {0} file.\n'.format(APP_JSON))
+    #     sys.exit(1)
+    pass
 
 
 def get_commits(repo, target = None, order = GIT_SORT_TOPOLOGICAL):
